@@ -10,13 +10,13 @@ class Navbar extends Component {
 
     return (
       <nav className="navbar">
-        <Link to={'/'} id='home-btn'>
-          <h4>Home</h4>
+        <Link to={'/'} >
+          <img src="/logo.png" alt="logo-small"/>
         </Link>
         {
           isLoggedIn
             ? <div>
-              <p>{user.username}</p>
+              <p>{user.fName}</p>
               <button onClick={logout}> Logout </button>
             </div>
             : (
