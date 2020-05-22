@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { withAuth } from './../lib/Auth';
 
-class Private extends Component {
+class Profile extends Component {
   render() {
     return (
       <div>
-        <h1>Private Route</h1>
+        <h1>Profile</h1>
         {
           this.props.isLoggedIn
             ? <h3>Username: {this.props.user.username}</h3>
@@ -17,4 +17,4 @@ class Private extends Component {
   }
 }
 
-export default withAuth(Private);
+export default withAuth(Profile);

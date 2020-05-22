@@ -17,6 +17,7 @@ function withAuth(WrappedComponent) {
             login={valueFromProvider.login}
             signup={valueFromProvider.signup}
             logout={valueFromProvider.logout}
+            errorMessage={valueFromProvider.errorMessage}
           />
         )}
       </Consumer>
@@ -29,6 +30,7 @@ class AuthProvider extends React.Component {
     user: null,
     isLoggedIn: false,
     isLoading: true,
+    errorMessage: undefined,
   };
 
   componentDidMount() {
@@ -68,23 +70,22 @@ class AuthProvider extends React.Component {
       )
       .then((response) => {
         const user = response.data;
-        this.setState({ isLoggedIn: true, isLoading: false, user });
+        this.setState({
+          isLoggedIn: true,
+          isLoading: false,
+          user,
+          errorMessage: undefined,
+        });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({
+          isLoggedIn: false,
+          isLoading: false,
+          errorMessage: "Something went wrong, try again!",
+        });
+        console.log(err);
+      });
   };
-  // signup = (email, password) => {
-  //   axios
-  //     .post(
-  //       "http://localhost:5000/auth/signup",
-  //       { email, password },
-  //       { withCredentials: true }
-  //     )
-  //     .then((response) => {
-  //       const user = response.data;
-  //       this.setState({ isLoggedIn: true, isLoading: false, user });
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   logout = () => {
     axios
@@ -96,12 +97,22 @@ class AuthProvider extends React.Component {
   };
 
   render() {
-    const { user, isLoggedIn, isLoading } = this.state;
+    const { user, isLoggedIn, isLoading, errorMessage } = this.state;
     const { login, signup, logout } = this;
 
     return (
-      <Provider value={{ user, isLoggedIn, isLoading, login, signup, logout }}>
-        {this.props.children}
+      <Provider
+        value={{
+          user,
+          isLoggedIn,
+          isLoading,
+          login,
+          signup,
+          logout,
+          errorMessage,
+        }}
+      >
+        {isLoading ? "loading" : this.props.children}
       </Provider>
     );
   }

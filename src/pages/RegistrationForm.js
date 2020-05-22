@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import { withAuth } from "../lib/Auth";
 
 import { Form, Input, Tooltip, Row, Col, Checkbox, Button, Radio } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { KeyOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
 
 const formItemLayout = {
   labelCol: {
@@ -29,8 +29,8 @@ const tailFormItemLayout = {
       offset: 0,
     },
     sm: {
-      span: 16,
-      offset: 8,
+      span: 24,
+      offset: 0,
     },
   },
 };
@@ -54,9 +54,13 @@ const RegistrationForm = (props) => {
       password
     );
   };
+
+  const { errorMessage } = props;
+
   return (
     <Row className="signupRow" justify="center" align="middle">
-      <Col xs={22} sm={12} md={10} lg={10} xl={6}>
+      <Col xs={22} sm={16} md={12} lg={11} xl={9}>
+        <h1>Register</h1>
         <Form
           {...formItemLayout}
           form={form}
@@ -66,14 +70,6 @@ const RegistrationForm = (props) => {
         >
           <Form.Item
             name="fName"
-            label={
-              <span>
-                Name&nbsp;
-                <Tooltip title="What is your name?">
-                  <QuestionCircleOutlined />
-                </Tooltip>
-              </span>
-            }
             rules={[
               {
                 required: true,
@@ -82,19 +78,15 @@ const RegistrationForm = (props) => {
               },
             ]}
           >
-            <Input />
+            <Input
+              ref={(input) => input && input.focus()}
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Name"
+            />
           </Form.Item>
 
           <Form.Item
             name="lName"
-            label={
-              <span>
-                Lastname&nbsp;
-                <Tooltip title="What is your lastname?">
-                  <QuestionCircleOutlined />
-                </Tooltip>
-              </span>
-            }
             rules={[
               {
                 required: true,
@@ -103,12 +95,14 @@ const RegistrationForm = (props) => {
               },
             ]}
           >
-            <Input />
+            <Input
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Lastname"
+            />
           </Form.Item>
 
           <Form.Item
             name="email"
-            label="E-mail"
             rules={[
               {
                 type: "email",
@@ -120,12 +114,14 @@ const RegistrationForm = (props) => {
               },
             ]}
           >
-            <Input />
+            <Input
+              prefix={<MailOutlined className="site-form-item-icon" />}
+              placeholder="email"
+            />
           </Form.Item>
 
           <Form.Item
             name="password"
-            label="Password"
             rules={[
               {
                 required: true,
@@ -134,12 +130,14 @@ const RegistrationForm = (props) => {
             ]}
             hasFeedback
           >
-            <Input.Password />
+            <Input.Password
+              prefix={<KeyOutlined className="site-form-item-icon" />}
+              placeholder="password"
+            />
           </Form.Item>
 
           <Form.Item
             name="confirm"
-            label="Confirm Password"
             dependencies={["password"]}
             hasFeedback
             rules={[
@@ -159,12 +157,14 @@ const RegistrationForm = (props) => {
               }),
             ]}
           >
-            <Input.Password />
+            <Input.Password
+              prefix={<KeyOutlined className="site-form-item-icon" />}
+              placeholder="confirm password"
+            />
           </Form.Item>
 
           <Form.Item
             name="genre"
-            label="Genre"
             rules={[
               {
                 required: true,
@@ -202,6 +202,7 @@ const RegistrationForm = (props) => {
             </Button>
           </Form.Item>
         </Form>
+        {errorMessage ? <h1>{errorMessage}</h1> : null}
       </Col>
     </Row>
   );

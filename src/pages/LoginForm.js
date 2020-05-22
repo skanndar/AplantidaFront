@@ -13,7 +13,7 @@ const LoginForm = (props) => {
   };
 
   return (
-    <Row className='loginRow' justify='center' align='middle'>
+    <Row className="loginRow" justify="center" align="middle">
       <Col xs={22} sm={12} md={10} lg={10} xl={6}>
         <Form
           name="normal_login"
@@ -33,8 +33,9 @@ const LoginForm = (props) => {
             ]}
           >
             <Input
+              ref={(input) => input && input.focus()}
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
+              placeholder="email"
             />
           </Form.Item>
           <Form.Item
