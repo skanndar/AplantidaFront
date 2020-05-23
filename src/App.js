@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import LoginForm from "./pages/LoginForm";
 import Private from "./pages/Private";
 import PlantsList from "./pages/PlantsList";
-import PlantDetail from "./pages/PlantDetail";
+import PlantDetail1 from "./pages/PlantDetail1";
 import RegistrationForm from "./pages/RegistrationForm";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -19,7 +19,6 @@ const { Header, Content, Footer } = Layout;
 
 class App extends Component {
   render() {
-    
     return (
       <>
         <Layout>
@@ -43,7 +42,11 @@ class App extends Component {
                 <PublicRoute exact path="/login" component={LoginForm} />
                 <PrivateRoute exact path="/private" component={Private} />
                 <PrivateRoute exact path="/search" component={PlantsList} />
-                <PrivateRoute exact path="/plant/:latinName" component={PlantDetail} />
+                <PrivateRoute
+                  exact
+                  path="/plant/:latinName"
+                  component={PlantDetail1}
+                />
                 {/* <PrivateRoute
                   exact
                   path="/plant/:latinName"

@@ -42,6 +42,29 @@ const plant = {
   __v: 0,
 };
 
+const reviews = [
+  {
+    _id: "5ec54f1e42ce744430765a8d",
+    title: "super",
+    text: "This plant is amazing",
+    user: "5ec54a35744be84133b3675d",
+    plant: "5ec54d234d0d58438e2a7914",
+    likes: 5,
+    stars: 4,
+    __v: 0,
+  },
+  {
+    _id: "5ec940047bae386760966d72",
+    title: "super",
+    text: "This plant is amazing",
+    user: "5ec54a35744be84133b3675d",
+    plant: "5ec54d234d0d58438e2a7914",
+    likes: 5,
+    stars: 4,
+    __v: 0,
+  },
+];
+
 const tabList = [
   {
     key: "tab1",
@@ -120,19 +143,17 @@ const contentList = {
 class PlantDetail extends Component {
   state = {
     plant: plant,
+    reviews: reviews,
     key: "tab1",
   };
-  
+
   onTabChange = (key, type) => {
     console.log(key, type);
     this.setState({ [type]: key });
   };
 
   render() {
-    // Get the id from props.match.params.id
-    console.log("this.state.plant :>> ", this.state.plant);
-    // const {latinName} = this.state.plant
-    const plant = this.state.plant;
+    const { plant, reviews } = this.state;
 
     return (
       <Row className="plantDetail" justify="center" align="top">
@@ -174,6 +195,7 @@ class PlantDetail extends Component {
 export default PlantDetail;
 
 // search = () => {
+// Get the id from props.match.params.id
 //   const searchStr = this.props.match.params.latinName;
 //   console.log("plantLatinName :>> ", searchStr);
 //   axios
