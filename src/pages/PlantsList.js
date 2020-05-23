@@ -3,27 +3,6 @@ import { withAuth } from "./../lib/Auth";
 import PlantCard from "../components/PlantCard";
 import { Row, Col, List } from "antd";
 
-const data = [
-  {
-    title: "Title 1",
-  },
-  {
-    title: "Title 2",
-  },
-  {
-    title: "Title 3",
-  },
-  {
-    title: "Title 4",
-  },
-  {
-    title: "Title 5",
-  },
-  {
-    title: "Title 6",
-  },
-];
-
 class PlantsList extends Component {
   state = {
     plants: [],
@@ -48,20 +27,21 @@ class PlantsList extends Component {
       <div>
         <h1>Found {plants.length} plants</h1>
         <List
+          className="site-card-wrapper"
           grid={{
-            gutter: 24,
+            gutter: 14,
             xs: 1,
             sm: 2,
-            md: 3,
+            md: 2,
             lg: 3,
             xl: 4,
             xxl: 4,
           }}
           dataSource={plants}
           renderItem={(onePlant) => (
-            <List.Item>
-              <PlantCard {...onePlant} />
-            </List.Item>
+              <List.Item>
+                <PlantCard {...onePlant} />
+              </List.Item>
           )}
         />
       </div>

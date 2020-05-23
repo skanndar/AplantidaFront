@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 import "./App.less";
 import { Switch, Route } from "react-router-dom";
+
+// PAGES & COMPONENTS
 import Home from "./pages/Home";
 import LoginForm from "./pages/LoginForm";
 import Private from "./pages/Private";
 import PlantsList from "./pages/PlantsList";
-
+import PlantDetail from "./pages/PlantDetail";
 import RegistrationForm from "./pages/RegistrationForm";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
-import { Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 
-import { Layout, Menu, Breadcrumb, Row, Col } from "antd";
+import { Layout, Row, Col } from "antd";
 
 const { Header, Content, Footer } = Layout;
 
 class App extends Component {
   render() {
+    
     return (
       <>
         <Layout>
@@ -41,6 +43,12 @@ class App extends Component {
                 <PublicRoute exact path="/login" component={LoginForm} />
                 <PrivateRoute exact path="/private" component={Private} />
                 <PrivateRoute exact path="/search" component={PlantsList} />
+                <PrivateRoute exact path="/plant/:latinName" component={PlantDetail} />
+                {/* <PrivateRoute
+                  exact
+                  path="/plant/:latinName"
+                  render={(props) => <PlantDetail {...props} isAuthed={true} />}
+                /> */}
               </Switch>
             </div>
           </Content>
