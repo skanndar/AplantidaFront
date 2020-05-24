@@ -13,7 +13,7 @@ function PublicRoute(props) {
       exact={exact}
       path={path}
       render={(props) => {
-        if (isLoggedIn) return <Redirect to="/private" />;
+        if (isLoggedIn) return <Redirect to="/profile" />;
         else if (!isLoggedIn) return <Component {...props} />;
       }}
     />

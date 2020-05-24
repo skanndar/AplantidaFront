@@ -6,6 +6,7 @@ import { LikeOutlined, HeartTwoTone } from "@ant-design/icons";
 import axios from "axios";
 import Reviews from "../components/Reviews";
 import ReviewModal from "../components/ReviewModal";
+import UploaderAvatar from "./../components/UploadAvatar";
 
 const tabList = [
   {
@@ -33,25 +34,6 @@ class Profile extends Component {
     key: "tab1",
   };
 
-  search = () => {
-    //Get the id from props.match.params.id
-    const name = this.props.match.params.latinName;
-    console.log("plantLatinName :>> ", name);
-    axios
-      .get(`http://localhost:5000/plant/${name}`, { withCredentials: true })
-      .then((response) => {
-        console.log("response", response);
-        this.setState({
-          plant: response.data[0],
-          reviews: response.data[0].reviews,
-        });
-      })
-      .catch((err) => console.log(err));
-  };
-  componentDidMount() {
-    this.search();
-  }
-
   onTabChange = (key, type) => {
     console.log(key, type);
     this.setState({ [type]: key });
@@ -59,7 +41,6 @@ class Profile extends Component {
 
   render() {
     const { user, plant, reviews } = this.state;
-    console.log("this.state.plant :>> ", this.state.plant);
     let contentList;
     if (user) {
       contentList = {
@@ -107,9 +88,9 @@ class Profile extends Component {
         <Card
           style={{ width: "100%" }}
           title={
-            <Avatar size={256} shape="square">
+            <UploaderAvatar size={256} shape="square">
               {user.image}
-            </Avatar>
+            </UploaderAvatar>
           }
           tabList={tabList}
           activeTabKey={this.state.key}
