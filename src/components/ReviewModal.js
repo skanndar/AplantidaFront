@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Form, Input, Modal, Button } from "antd";
+import { Form, Input, Modal, Button, Rate } from "antd";
+import { HeartOutlined } from "@ant-design/icons";
+import ImageDragger from "./ImageDragger";
 
 const layout = {
   wrapperCol: {
-    span: 16,
+    span: 24,
   },
 };
 const validateMessages = {
@@ -55,7 +57,7 @@ class ReviewModal extends Component {
           Add Review
         </Button>
         <Modal
-          title="Title"
+          title="New Comment"
           visible={visible}
           onOk={this.handleOk}
           okText="Send"
@@ -70,10 +72,20 @@ class ReviewModal extends Component {
               validateMessages={validateMessages}
             >
               <Form.Item rules={[{ required: true }]}>
+                <Rate
+                  defaultValue={parseInt(Math.random() * 6)}
+                  character={<HeartOutlined />}
+                  allowHalf
+                />
+              </Form.Item>
+              <Form.Item rules={[{ required: true }]}>
                 <Input placeholder="Title" />
               </Form.Item>
               <Form.Item name={["user", "introduction"]}>
                 <Input.TextArea placeholder="Write your comment here..." />
+              </Form.Item>
+              <Form.Item name={["user", "introduction"]}>
+                <ImageDragger />
               </Form.Item>
             </Form>
           }

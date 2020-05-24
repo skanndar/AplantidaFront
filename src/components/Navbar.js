@@ -73,7 +73,7 @@ class Navbar extends Component {
               </Link>
             </Menu.Item>
             <Menu.Item key="2">
-              <Link to={"/private"}>
+              <Link to={"/profile"}>
                 <UserOutlined />
               </Link>
             </Menu.Item>
@@ -89,7 +89,7 @@ class Navbar extends Component {
             defaultSelectedKeys={["2"]}
           >
             <Menu.Item key="1">
-              <Link to={"/private"}>
+              <Link to={"/profile"}>
                 <UserOutlined />
               </Link>
             </Menu.Item>

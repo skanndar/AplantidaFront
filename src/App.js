@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 // PAGES & COMPONENTS
 import Home from "./pages/Home";
 import LoginForm from "./pages/LoginForm";
-import Private from "./pages/Private";
+import Profile from "./pages/Profile";
 import PlantsList from "./pages/PlantsList";
 import PlantDetail1 from "./pages/PlantDetail1";
 import RegistrationForm from "./pages/RegistrationForm";
@@ -40,7 +40,7 @@ class App extends Component {
                   component={RegistrationForm}
                 />
                 <PublicRoute exact path="/login" component={LoginForm} />
-                <PrivateRoute exact path="/private" component={Private} />
+                <PrivateRoute exact path="/profile" component={Profile} />
                 <PrivateRoute exact path="/search" component={PlantsList} />
                 <PrivateRoute
                   exact

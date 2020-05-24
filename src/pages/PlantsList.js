@@ -29,7 +29,7 @@ class PlantsList extends Component {
         <List
           className="site-card-wrapper"
           grid={{
-            gutter: 14,
+            gutter: 16,
             xs: 1,
             sm: 2,
             md: 2,
