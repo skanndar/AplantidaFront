@@ -7,21 +7,22 @@ import {
   UserOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { Input, Layout, Menu, Row, Col } from "antd";
+import { Input, Layout, Menu, Row, Col, Avatar } from "antd";
 import axios from "axios";
 
-const { Header, Content, Footer } = Layout;
+const { Header } = Layout;
 
 const { Search } = Input;
 
 class Navbar extends Component {
-  //   componentDidMount() {
-  //     this.refs.linkInput.focus()
-  // }
-
   state = {
     plants: [],
+    user: this.props.user,
   };
+
+  componentDidMount() {
+    this.setState({ user: this.props.user });
+  }
 
   search = (searchStr) => {
     axios
@@ -32,16 +33,12 @@ class Navbar extends Component {
       )
       .then((response) => {
         console.log(response);
-        this.setState({ plants: response.data }, 
-          ()=>{
-            this.props.history.push({
-              pathname:'/search',
-              state:{plants:this.state.plants}
-            })
-
+        this.setState({ plants: response.data }, () => {
+          this.props.history.push({
+            pathname: "/search",
+            state: { plants: this.state.plants },
           });
-        
-
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -49,52 +46,58 @@ class Navbar extends Component {
   render() {
     // `user`, `logout`, `isLoggedIn` are coming from the AuthProvider
     // and are injected by the withAuth HOC
-    const { logout, isLoggedIn } = this.props;
+    const { logout, isLoggedIn, isLoading } = this.props;
     const { search } = this;
 
     return (
       <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
         <div className="containerLogo">
           <Link to={"/"}>
-            <img src="/logo.png" className="logo" alt="logo" />
+            <img src="/aplantidalogo.svg" className="logo" alt="logo" />
           </Link>
         </div>
 
-        {isLoggedIn ? (
-          <Menu
-            className="menu"
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["2"]}
-          >
-            <Menu.Item key="1">
-              <Link to={"/plants"}>
-                <SyncOutlined spin />
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Link to={"/profile"}>
-                <UserOutlined />
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <LogoutOutlined onClick={logout} />
-            </Menu.Item>
-          </Menu>
-        ) : (
-          <Menu
-            className="menu"
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["2"]}
-          >
-            <Menu.Item key="1">
-              <Link to={"/profile"}>
-                <UserOutlined />
-              </Link>
-            </Menu.Item>
-          </Menu>
-        )}
+        {!isLoading ? (
+          isLoggedIn ? (
+            <Menu
+              className="menu"
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={["2"]}
+            >
+              <Menu.Item key="1">
+                <Link to={"/plants"}>
+                  <SyncOutlined spin />
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link to={"/profile"}>
+                  {this.state.user.image ? (
+                    <Avatar src={this.state.user.image} />
+                  ) : (
+                    <Avatar>{this.state.user.fName}</Avatar>
+                  )}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="3" onClick={logout}>
+                <LogoutOutlined />
+              </Menu.Item>
+            </Menu>
+          ) : (
+            <Menu
+              className="menu"
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={["2"]}
+            >
+              <Menu.Item key="1">
+                <Link to={"/profile"}>
+                  <UserOutlined />
+                </Link>
+              </Menu.Item>
+            </Menu>
+          )
+        ) : null}
 
         <Search
           ref={(input) => input && input.focus()}
@@ -103,7 +106,7 @@ class Navbar extends Component {
           enterButton="search"
           // loading
           size="large"
-          alldowClear
+          allowClear
           onSearch={(value) => {
             search(value);
           }}

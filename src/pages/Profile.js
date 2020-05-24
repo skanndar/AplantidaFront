@@ -70,7 +70,15 @@ class Profile extends Component {
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Favorites">
                   {user.favorites.map((favorite) => {
-                    return <h3>I am here</h3>;
+                    return (
+                      <>
+                        <a href={`/plant/${favorite.latinName}`}>
+                          {" "}
+                          {favorite.latinName}{" "}
+                        </a>
+                        <br/>
+                      </>
+                    );
                   })}
                 </Card>
               </Col>

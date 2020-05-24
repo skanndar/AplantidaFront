@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import LoginForm from "./pages/LoginForm";
 import Profile from "./pages/Profile";
 import PlantsList from "./pages/PlantsList";
-import PlantDetail1 from "./pages/PlantDetail1";
+import PlantDetail from "./pages/PlantDetail";
 import RegistrationForm from "./pages/RegistrationForm";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -45,7 +45,7 @@ class App extends Component {
                 <PrivateRoute
                   exact
                   path="/plant/:latinName"
-                  component={PlantDetail1}
+                  component={PlantDetail}
                 />
                 {/* <PrivateRoute
                   exact

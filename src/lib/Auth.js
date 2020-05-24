@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Skeleton } from "antd";
 
 const { Consumer, Provider } = React.createContext();
 
@@ -112,7 +113,7 @@ class AuthProvider extends React.Component {
           errorMessage,
         }}
       >
-        {isLoading ? "loading" : this.props.children}
+        {isLoading ? <Skeleton active paragraph={{ rows: 16 }}/> : this.props.children}
       </Provider>
     );
   }
