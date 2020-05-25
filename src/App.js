@@ -14,6 +14,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar";
 
 import { Layout, Row, Col } from "antd";
+import NotFound from "./pages/NotFound";
 
 const { Header, Content, Footer } = Layout;
 
@@ -30,7 +31,7 @@ class App extends Component {
           >
             <div
               className="site-layout-background"
-              style={{ padding: 14, minHeight: "80vh" }}
+              style={{ padding: 14, minHeight: "75vh" }}
             >
               <Switch>
                 <Route exact path="/" component={Home} />
@@ -47,16 +48,12 @@ class App extends Component {
                   path="/plant/:latinName"
                   component={PlantDetail}
                 />
-                {/* <PrivateRoute
-                  exact
-                  path="/plant/:latinName"
-                  render={(props) => <PlantDetail {...props} isAuthed={true} />}
-                /> */}
+                <Route component={NotFound} />
               </Switch>
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            APLANTIDA ©2020 <br /> Created by ALIADOS
+            APLANTIDA ©{new Date().getFullYear()} <br /> Powered by ALIADOS
           </Footer>
         </Layout>
       </>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from "./../lib/Auth";
 import PlantCard from "../components/PlantCard";
 import { Row, Col, List } from "antd";
+import FilterDrawer from "../components/FilterDrawer";
 
 class PlantsList extends Component {
   state = {
@@ -26,6 +27,7 @@ class PlantsList extends Component {
     return (
       <div>
         <h1>Found {plants.length} plants</h1>
+        <FilterDrawer/>
         <List
           className="site-card-wrapper"
           grid={{

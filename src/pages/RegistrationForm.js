@@ -59,8 +59,10 @@ const RegistrationForm = (props) => {
 
   return (
     <Row className="signupRow" justify="center" align="middle">
+      <Col className="homeLogo">
+        <img src="/isoLogo.png" alt="logo-home" />
+      </Col>
       <Col xs={22} sm={16} md={12} lg={11} xl={9}>
-        <h1>Register</h1>
         <Form
           {...formItemLayout}
           form={form}
