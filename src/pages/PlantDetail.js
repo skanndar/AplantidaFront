@@ -126,7 +126,7 @@ class PlantDetail extends Component {
             </Card>
           </>
         ),
-        tab2: <Reviews plant={plant}></Reviews>,
+        tab2: <Reviews data={plant}></Reviews>,
       };
     }
 

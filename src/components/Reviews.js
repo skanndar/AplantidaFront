@@ -1,40 +1,41 @@
-import React from "react";
-import { List, Avatar, Space, Rate } from "antd";
+import React, { Component, useState } from "react";
+import { List, Avatar, Space, Rate, Button } from "antd";
+import { withAuth } from "../lib/Auth";
 import {
   MessageOutlined,
   LikeOutlined,
   HeartOutlined,
+  DeleteOutlined,
+  DeleteTwoTone,
 } from "@ant-design/icons";
-
-const listData = [];
-for (let i = 0; i < 15; i++) {
-  listData.push({
-    href: "#",
-    title: `Aplantida review simulation ${i}`,
-    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-    description: "ALIADOS",
-    content: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto incidunt error perspiciatis obcaecati accusamus hic a quam! Accusamus dicta ad praesentium nam consequuntur optio architecto ea, perferendis ipsum, cum tempore.`,
-  });
-}
-
-// REVIEW MODEL
-//   {
-//     title: `Aplantida review simulation ${i}`,
-//     text: String,
-//     user: {type: Schema.Types.ObjectId,ref:'User'},
-//     plant: {type: Schema.Types.ObjectId,ref:'Plant'},
-//     likes: Number,
-//     stars: Number
-//   }
-
-const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
+import Axios from "axios";
 
 function Reviews(props) {
+  const [reviews, setReviews] = useState(props.data.reviews);
+
+  const IconText = ({ icon, text }) => (
+    <Space>
+      {React.createElement(icon)}
+      {text}
+    </Space>
+  );
+
+  const handleDelete = (reviewId) => {
+    Axios.delete(process.env.REACT_APP_API_URL + `/review/${reviewId}`, {
+      withCredentials: true,
+    })
+      .then((response) => {
+        console.log("response.data :>> ", response.data);
+        const reviewId = response.data._id;
+        const newReviewsArray = reviews.filter((review) => {
+          return review._id !== reviewId;
+        });
+        console.log("newReviewsArray :>> ", newReviewsArray);
+        setReviews(newReviewsArray);
+      })
+      .catch((err) => console.log("error :>> ", err));
+  };
+
   return (
     <List
       itemLayout="vertical"
@@ -45,7 +46,7 @@ function Reviews(props) {
         },
         pageSize: 4,
       }}
-      dataSource={props.plant.reviews}
+      dataSource={reviews}
       footer={
         <div>
           <b>Designed by ALIADOS</b>
@@ -53,7 +54,7 @@ function Reviews(props) {
       }
       renderItem={(item) => (
         <List.Item
-          key={item.title}
+          key={item._id}
           actions={[
             <Rate
               disabled
@@ -82,8 +83,17 @@ function Reviews(props) {
         >
           <List.Item.Meta
             avatar={<Avatar src={item.avatar} />}
-            title={<a href={item.href}>{item.title}</a>}
-            description={props.plant.latinName}
+            title={
+              <>
+                <a href={item.href}>{item.title}</a>{" "}
+                {props.user._id === item.user ? (
+                  <Button onClick={() => handleDelete(item._id)} type="ghost">
+                    <DeleteTwoTone twoToneColor="#43bd26" />
+                  </Button>
+                ) : null}
+              </>
+            }
+            description={props.data.latinName}
           />
           {item.text}
         </List.Item>
@@ -92,4 +102,25 @@ function Reviews(props) {
   );
 }
 
-export default Reviews;
+export default withAuth(Reviews);
+
+// const listData = [];
+// for (let i = 0; i < 15; i++) {
+//   listData.push({
+//     href: "#",
+//     title: `Aplantida review simulation ${i}`,
+//     avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+//     description: "ALIADOS",
+//     content: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto incidunt error perspiciatis obcaecati accusamus hic a quam! Accusamus dicta ad praesentium nam consequuntur optio architecto ea, perferendis ipsum, cum tempore.`,
+//   });
+// }
+
+// REVIEW MODEL
+//   {
+//     title: `Aplantida review simulation ${i}`,
+//     text: String,
+//     user: {type: Schema.Types.ObjectId,ref:'User'},
+//     plant: {type: Schema.Types.ObjectId,ref:'Plant'},
+//     likes: Number,
+//     stars: Number
+//   }

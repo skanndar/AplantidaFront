@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { withAuth } from "../lib/Auth";
 import { List, Avatar, Space, Rate, Row, Col, Carousel, Card } from "antd";
 import { MessageOutlined } from "@ant-design/icons";
-import { LikeOutlined, HeartTwoTone } from "@ant-design/icons";
+import { DeleteOutlined, HeartTwoTone } from "@ant-design/icons";
 import axios from "axios";
 import Reviews from "../components/Reviews";
-import ReviewModal from "../components/ReviewModal";
 import UploaderAvatar from "./../components/UploadAvatar";
 import EdiatableText from "../components/EdiatableText";
+
 
 const tabList = [
   {
@@ -46,6 +46,7 @@ class Profile extends Component {
         withCredentials: true,
       })
       .then((response) => {
+        console.log('response.data :>> ', response.data);
         const user = response.data;
         this.setState({ user });
       })
@@ -98,7 +99,7 @@ class Profile extends Component {
             </Row>
           </>
         ),
-        tab2: <Reviews {...this.props}></Reviews>,
+        tab2: <Reviews data ={user} {...this.props}></Reviews>,
       };
     }
 
