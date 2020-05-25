@@ -8,13 +8,13 @@ const layout = {
     span: 24,
   },
 };
-const validateMessages = {
-  required: "${label} is required!",
+let validateMessages = {
+  required: "${name} is required!",
 };
 
 class ReviewModal extends Component {
   state = {
-    ModalText: "Content of the modal",
+    ModalText: "",
     visible: false,
     confirmLoading: false,
   };
@@ -57,38 +57,51 @@ class ReviewModal extends Component {
           Add Review
         </Button>
         <Modal
-          title="New Comment"
+          title="New Review"
           visible={visible}
-          onOk={()=> {
-            this.handleOk()
-            this.onFinish()}}
+          onOk={() => {
+            this.handleOk();
+            this.onFinish();
+          }}
           okText="Send"
           confirmLoading={confirmLoading}
           onCancel={this.handleCancel}
+          footer={null}
         >
           {
             <Form
               {...layout}
               name="nest-messages"
-              onFinish={this.onFinish}
+              onFinish={() => {
+                this.handleOk();
+                this.onFinish();
+              }}
               validateMessages={validateMessages}
             >
               <p>{ModalText}</p>
-              <Form.Item name='stars' rules={[{ required: true }]}>
+              <Form.Item name="stars" rules={[{ required: true }]}>
                 <Rate
                   defaultValue={parseInt(Math.random() * 6)}
                   character={<HeartOutlined />}
                   allowHalf
                 />
               </Form.Item>
-              <Form.Item name='title' rules={[{ required: true }]}>
+              <Form.Item name="title" rules={[{ required: true }]}>
                 <Input placeholder="Title" />
               </Form.Item>
-              <Form.Item name={["text", "introduction"]}>
+              <Form.Item
+                name={["text", "introduction"]}
+                rules={[{ required: true }]}
+              >
                 <Input.TextArea placeholder="Write your comment here..." />
               </Form.Item>
               <Form.Item name={["image", "introduction"]}>
                 <ImageDragger />
+              </Form.Item>
+              <Form.Item wrapperCol={{ ...layout.wrapperCol }}>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
               </Form.Item>
             </Form>
           }

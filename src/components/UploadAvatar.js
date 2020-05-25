@@ -28,21 +28,22 @@ class UploadAvatar extends Component {
     imageUrl: this.props.user.image,
   };
 
-  shouldComponentUpdate(nextProps) {
-    console.log("nextProps :>> ", nextProps);
-    console.log(
-      "nextProps.user !== this.props.user :>> ",
-      nextProps.user.image !== this.props.user.image
-    );
-    return nextProps.user.image !== this.props.user.image;
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   console.log("nextProps :>> ", nextProps);
+  //   console.log(
+  //     "nextProps.user !== this.props.user :>> ",
+  //     nextProps.user.image !== this.props.user.image
+  //   );
+  //   return nextProps.user.image !== this.props.user.image;
+  // }
 
-  componentDidUpdate() {
-    console.log("this.props.me() :>> ", this.props.me());
-    this.props.me();
-  }
+  // componentDidUpdate() {
+  //   console.log("this.props.me() :>> ", this.props.me());
+  //   this.props.me();
+  // }
 
   handleChange = (info) => {
+    console.log("info :>> ", info);
     if (info.file.status === "uploading") {
       this.setState({ loading: true });
       return;
@@ -50,10 +51,15 @@ class UploadAvatar extends Component {
     if (info.file.status === "done") {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (imageUrl) =>
-        this.setState({
-          imageUrl,
-          loading: false,
-        })
+        this.setState(
+          {
+            imageUrl,
+            loading: false,
+          },
+          () => {
+            this.props.me();
+          }
+        )
       );
     }
   };

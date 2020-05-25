@@ -19,12 +19,6 @@ class Navbar extends Component {
     plants: [],
   };
 
-  // componentWillReceiveProps(nextProps) {
-  //   console.log("nextProps :>> ", nextProps);
-  //   console.log("this.props.me :>> ", this.props.me);
-  //   // this.props.me();
-  //   // return nextProps !== this.props;
-  // }
 
   search = (searchStr) => {
     axios

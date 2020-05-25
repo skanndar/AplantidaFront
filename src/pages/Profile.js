@@ -32,6 +32,7 @@ class Profile extends Component {
     plant: null,
     reviews: null,
     key: "tab1",
+    user: null,
   };
 
   onTabChange = (key, type) => {
@@ -39,10 +40,20 @@ class Profile extends Component {
     this.setState({ [type]: key });
   };
 
+  componentDidMount() {
+    axios
+      .get(process.env.REACT_APP_API_URL + "/auth/profile", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        const user = response.data;
+        this.setState({ user });
+      })
+      .catch((err) => console.log("error :>> ", err));
+  }
 
   render() {
-    const { plant, reviews } = this.state;
-    const {user} = this.props
+    const { plant, reviews, user } = this.state;
     let contentList;
     if (user) {
       contentList = {
