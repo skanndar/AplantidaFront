@@ -9,8 +9,11 @@ class PlantsList extends Component {
     plants: [],
   };
   componentDidMount() {
-    const { plants } = this.props.location.state;
-    this.setState({ plants });
+    console.log("this.props.location.state :>> ", this.props.location.state);
+    if (this.props.location.state) {
+      const { plants } = this.props.location.state;
+      this.setState({ plants });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -27,7 +30,7 @@ class PlantsList extends Component {
     return (
       <div>
         <h1>Found {plants.length} plants</h1>
-        <FilterDrawer/>
+        <FilterDrawer />
         <List
           className="site-card-wrapper"
           grid={{
@@ -41,9 +44,9 @@ class PlantsList extends Component {
           }}
           dataSource={plants}
           renderItem={(onePlant) => (
-              <List.Item>
-                <PlantCard {...onePlant} />
-              </List.Item>
+            <List.Item>
+              <PlantCard {...onePlant} />
+            </List.Item>
           )}
         />
       </div>

@@ -29,7 +29,6 @@ const IconText = ({ icon, text }) => (
 
 class Profile extends Component {
   state = {
-    user: this.props.user,
     plant: null,
     reviews: null,
     key: "tab1",
@@ -40,8 +39,10 @@ class Profile extends Component {
     this.setState({ [type]: key });
   };
 
+
   render() {
-    const { user, plant, reviews } = this.state;
+    const { plant, reviews } = this.state;
+    const {user} = this.props
     let contentList;
     if (user) {
       contentList = {
@@ -60,12 +61,12 @@ class Profile extends Component {
               </Col>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Email">
-                <EdiatableText text={user.email} />
+                  <EdiatableText text={user.email} />
                 </Card>
               </Col>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Genre">
-                <EdiatableText text={user.genre} />
+                  <EdiatableText text={user.genre} />
                 </Card>
               </Col>
               <Col>
@@ -77,7 +78,7 @@ class Profile extends Component {
                           {" "}
                           {favorite.latinName}{" "}
                         </a>
-                        <br/>
+                        <br />
                       </>
                     );
                   })}

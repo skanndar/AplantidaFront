@@ -19,6 +19,7 @@ function withAuth(WrappedComponent) {
             signup={valueFromProvider.signup}
             logout={valueFromProvider.logout}
             errorMessage={valueFromProvider.errorMessage}
+            me={valueFromProvider.me}
           />
         )}
       </Consumer>
@@ -38,7 +39,9 @@ class AuthProvider extends React.Component {
     // When app and AuthProvider load for the first time
     // make a call to the server '/me' and check if user is authenitcated
     axios
-      .get("http://localhost:5000/auth/me", { withCredentials: true })
+      .get(process.env.REACT_APP_API_URL + "/auth/me", {
+        withCredentials: true,
+      })
       .then((response) => {
         const user = response.data;
         this.setState({ isLoggedIn: true, isLoading: false, user });
@@ -48,10 +51,24 @@ class AuthProvider extends React.Component {
       );
   }
 
+  me = () => {
+    axios
+      .get(process.env.REACT_APP_API_URL + "/auth/me", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        const user = response.data;
+        this.setState({ isLoggedIn: true, isLoading: false, user });
+      })
+      .catch((err) =>
+        this.setState({ isLoggedIn: false, isLoading: false, user: null })
+      );
+  };
+
   login = (email, password) => {
     axios
       .post(
-        "http://localhost:5000/auth/login",
+        process.env.REACT_APP_API_URL + "/auth/login",
         { email, password },
         { withCredentials: true }
       )
@@ -65,7 +82,7 @@ class AuthProvider extends React.Component {
   signup = (agreement, confirm, email, fName, genre, lName, password) => {
     axios
       .post(
-        "http://localhost:5000/auth/signup",
+        process.env.REACT_APP_API_URL + "/auth/signup",
         { agreement, confirm, email, fName, genre, lName, password },
         { withCredentials: true }
       )
@@ -90,7 +107,9 @@ class AuthProvider extends React.Component {
 
   logout = () => {
     axios
-      .get("http://localhost:5000/auth/logout", { withCredentials: true })
+      .get(process.env.REACT_APP_API_URL + "/auth/logout", {
+        withCredentials: true,
+      })
       .then((response) => {
         this.setState({ isLoggedIn: false, isLoading: false, user: null });
       })
@@ -99,7 +118,7 @@ class AuthProvider extends React.Component {
 
   render() {
     const { user, isLoggedIn, isLoading, errorMessage } = this.state;
-    const { login, signup, logout } = this;
+    const { login, signup, logout, me } = this;
 
     return (
       <Provider
@@ -111,9 +130,14 @@ class AuthProvider extends React.Component {
           signup,
           logout,
           errorMessage,
+          me,
         }}
       >
-        {isLoading ? <Skeleton active paragraph={{ rows: 16 }}/> : this.props.children}
+        {isLoading ? (
+          <Skeleton active paragraph={{ rows: 16 }} />
+        ) : (
+          this.props.children
+        )}
       </Provider>
     );
   }

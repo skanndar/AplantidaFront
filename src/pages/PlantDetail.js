@@ -35,7 +35,9 @@ class PlantDetail extends Component {
     const name = this.props.match.params.latinName;
     console.log("plantLatinName :>> ", name);
     axios
-      .get(`http://localhost:5000/plant/${name}`, { withCredentials: true })
+      .get(process.env.REACT_APP_API_URL + `/plant/${name}`, {
+        withCredentials: true,
+      })
       .then((response) => {
         console.log("response", response);
         this.setState({
@@ -124,7 +126,7 @@ class PlantDetail extends Component {
             </Card>
           </>
         ),
-        tab2: <Reviews {...this.props}></Reviews>,
+        tab2: <Reviews plant={plant}></Reviews>,
       };
     }
 
@@ -159,7 +161,9 @@ class PlantDetail extends Component {
               }
               <Row style={{ justifyContent: "space-between" }}>
                 <h1> {plant.latinName}</h1>
-                {this.state.key === "tab2" ? <ReviewModal /> : null}
+                {this.state.key === "tab2" ? (
+                  <ReviewModal plant={plant} />
+                ) : null}
               </Row>
             </>
           }

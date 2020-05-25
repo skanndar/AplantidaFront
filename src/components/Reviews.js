@@ -6,7 +6,6 @@ import {
   HeartOutlined,
 } from "@ant-design/icons";
 
-
 const listData = [];
 for (let i = 0; i < 15; i++) {
   listData.push({
@@ -18,6 +17,16 @@ for (let i = 0; i < 15; i++) {
   });
 }
 
+// REVIEW MODEL
+//   {
+//     title: `Aplantida review simulation ${i}`,
+//     text: String,
+//     user: {type: Schema.Types.ObjectId,ref:'User'},
+//     plant: {type: Schema.Types.ObjectId,ref:'Plant'},
+//     likes: Number,
+//     stars: Number
+//   }
+
 const IconText = ({ icon, text }) => (
   <Space>
     {React.createElement(icon)}
@@ -25,7 +34,7 @@ const IconText = ({ icon, text }) => (
   </Space>
 );
 
-function Reviews() {
+function Reviews(props) {
   return (
     <List
       itemLayout="vertical"
@@ -36,31 +45,30 @@ function Reviews() {
         },
         pageSize: 4,
       }}
-      dataSource={listData}
+      dataSource={props.plant.reviews}
       footer={
         <div>
           <b>Designed by ALIADOS</b>
         </div>
       }
-
       renderItem={(item) => (
         <List.Item
           key={item.title}
           actions={[
             <Rate
               disabled
-              defaultValue={parseInt(Math.random() * 6)}
+              defaultValue={item.stars}
               character={<HeartOutlined />}
               allowHalf
             />,
             <IconText
               icon={LikeOutlined}
-              text={parseInt(Math.random()*144*9)}
+              text={item.likes}
               key="list-vertical-like-o"
             />,
             <IconText
               icon={MessageOutlined}
-              text={parseInt(Math.random()*144*9)}
+              text={parseInt(Math.random() * 144 * 9)}
               key="list-vertical-message"
             />,
           ]}
@@ -75,9 +83,9 @@ function Reviews() {
           <List.Item.Meta
             avatar={<Avatar src={item.avatar} />}
             title={<a href={item.href}>{item.title}</a>}
-            description={item.description}
+            description={props.plant.latinName}
           />
-          {item.content}
+          {item.text}
         </List.Item>
       )}
     />

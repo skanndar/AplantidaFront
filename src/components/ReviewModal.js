@@ -20,7 +20,7 @@ class ReviewModal extends Component {
   };
 
   onFinish = (values) => {
-    console.log(values);
+    console.log("this is the new review --> ", values);
   };
 
   showModal = () => {
@@ -59,7 +59,9 @@ class ReviewModal extends Component {
         <Modal
           title="New Comment"
           visible={visible}
-          onOk={this.handleOk}
+          onOk={()=> {
+            this.handleOk()
+            this.onFinish()}}
           okText="Send"
           confirmLoading={confirmLoading}
           onCancel={this.handleCancel}
@@ -71,20 +73,21 @@ class ReviewModal extends Component {
               onFinish={this.onFinish}
               validateMessages={validateMessages}
             >
-              <Form.Item rules={[{ required: true }]}>
+              <p>{ModalText}</p>
+              <Form.Item name='stars' rules={[{ required: true }]}>
                 <Rate
                   defaultValue={parseInt(Math.random() * 6)}
                   character={<HeartOutlined />}
                   allowHalf
                 />
               </Form.Item>
-              <Form.Item rules={[{ required: true }]}>
+              <Form.Item name='title' rules={[{ required: true }]}>
                 <Input placeholder="Title" />
               </Form.Item>
-              <Form.Item name={["user", "introduction"]}>
+              <Form.Item name={["text", "introduction"]}>
                 <Input.TextArea placeholder="Write your comment here..." />
               </Form.Item>
-              <Form.Item name={["user", "introduction"]}>
+              <Form.Item name={["image", "introduction"]}>
                 <ImageDragger />
               </Form.Item>
             </Form>

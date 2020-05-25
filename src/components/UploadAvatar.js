@@ -28,24 +28,19 @@ class UploadAvatar extends Component {
     imageUrl: this.props.user.image,
   };
 
-  search = (photo) => {
-    axios
-      .post(
-        "http://localhost:5000/profile-picture",
-        { photo },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        console.log(response);
-        this.setState({ plants: response.data }, () => {
-          this.props.history.push({
-            pathname: "/search",
-            state: { plants: this.state.plants },
-          });
-        });
-      })
-      .catch((err) => console.log(err));
-  };
+  shouldComponentUpdate(nextProps) {
+    console.log("nextProps :>> ", nextProps);
+    console.log(
+      "nextProps.user !== this.props.user :>> ",
+      nextProps.user.image !== this.props.user.image
+    );
+    return nextProps.user.image !== this.props.user.image;
+  }
+
+  componentDidUpdate() {
+    console.log("this.props.me() :>> ", this.props.me());
+    this.props.me();
+  }
 
   handleChange = (info) => {
     if (info.file.status === "uploading") {
@@ -77,7 +72,7 @@ class UploadAvatar extends Component {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="http://localhost:5000/profile-picture"
+        action={process.env.REACT_APP_API_URL + "/profile-picture"}
         withCredentials="true"
         beforeUpload={beforeUpload}
         onChange={this.handleChange}

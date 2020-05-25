@@ -17,17 +17,19 @@ const { Search } = Input;
 class Navbar extends Component {
   state = {
     plants: [],
-    user: this.props.user,
   };
 
-  componentDidMount() {
-    this.setState({ user: this.props.user });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log("nextProps :>> ", nextProps);
+  //   console.log("this.props.me :>> ", this.props.me);
+  //   // this.props.me();
+  //   // return nextProps !== this.props;
+  // }
 
   search = (searchStr) => {
     axios
       .post(
-        "http://localhost:5000/plants",
+        process.env.REACT_APP_API_URL + "/plants",
         { searchStr },
         { withCredentials: true }
       )
@@ -46,7 +48,7 @@ class Navbar extends Component {
   render() {
     // `user`, `logout`, `isLoggedIn` are coming from the AuthProvider
     // and are injected by the withAuth HOC
-    const { logout, isLoggedIn, isLoading } = this.props;
+    const { logout, isLoggedIn, isLoading, user } = this.props;
     const { search } = this;
 
     return (
@@ -72,10 +74,10 @@ class Navbar extends Component {
               </Menu.Item>
               <Menu.Item key="2">
                 <Link to={"/profile"}>
-                  {this.state.user.image ? (
-                    <Avatar src={this.state.user.image} />
+                  {user.image ? (
+                    <Avatar src={user.image} />
                   ) : (
-                    <Avatar>{this.state.user.fName}</Avatar>
+                    <Avatar>{user.fName}</Avatar>
                   )}
                 </Link>
               </Menu.Item>
@@ -102,7 +104,7 @@ class Navbar extends Component {
         <Search
           ref={(input) => input && input.focus()}
           className="searchBar"
-          placeholder={isLoggedIn ? "Search plants" : 'Login to search plants'}
+          placeholder={isLoggedIn ? "Search plants" : "Login to search plants"}
           enterButton="search"
           // loading
           size="large"
