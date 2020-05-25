@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Drawer, Button } from "antd";
+import { Drawer, Button, Affix } from "antd";
 
 const FilterDrawer = () => {
   const [visible, setVisible] = useState(false);
+  const [top, setTop] = useState(110);
 
   const showDrawer = () => {
     setVisible(true);
@@ -14,9 +15,11 @@ const FilterDrawer = () => {
 
   return (
     <>
-      <Button type="primary" onClick={showDrawer}>
-        Filter
-      </Button>
+      <Affix offsetTop={top}>
+        <Button type="primary" onClick={showDrawer}>
+          Filter
+        </Button>
+      </Affix>
       <Drawer
         title="Filters"
         placement="left"
@@ -25,7 +28,7 @@ const FilterDrawer = () => {
         visible={visible}
         width="320"
         keyboard
-        footer={'Powered by ALIADOS'}
+        footer={"Powered by ALIADOS"}
       >
         <p>Some contents...</p>
         <p>Some contents...</p>

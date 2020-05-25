@@ -7,6 +7,7 @@ import axios from "axios";
 import Reviews from "../components/Reviews";
 import ReviewModal from "../components/ReviewModal";
 import UploaderAvatar from "./../components/UploadAvatar";
+import EdiatableText from "../components/EdiatableText";
 
 const tabList = [
   {
@@ -49,22 +50,22 @@ class Profile extends Component {
             <Row gutter={[16, 16]}>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Name">
-                  {user.fName}
+                  <EdiatableText text={user.fName} />
                 </Card>
               </Col>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Lastname">
-                  {user.lName}
+                  <EdiatableText text={user.lName} />
                 </Card>
               </Col>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Email">
-                  {user.email}
+                <EdiatableText text={user.email} />
                 </Card>
               </Col>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Genre">
-                  {user.genre}
+                <EdiatableText text={user.genre} />
                 </Card>
               </Col>
               <Col>

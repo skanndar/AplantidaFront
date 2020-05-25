@@ -16,8 +16,6 @@ const LoginForm = (props) => {
     <Row className="loginRow" justify="center" align="middle">
       <Col className="homeLogo">
         <img src="/isoLogo.png" alt="logo-home" />
-      </Col>
-      <Col xs={22} sm={12} md={10} lg={10} xl={6}>
         <Form
           name="normal_login"
           className="login-form"
@@ -27,6 +25,7 @@ const LoginForm = (props) => {
           onFinish={onFinish}
         >
           <Form.Item
+            ref={(input) => input && input.focus()}
             name="email"
             rules={[
               {

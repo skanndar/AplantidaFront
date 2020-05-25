@@ -61,8 +61,6 @@ const RegistrationForm = (props) => {
     <Row className="signupRow" justify="center" align="middle">
       <Col className="homeLogo">
         <img src="/isoLogo.png" alt="logo-home" />
-      </Col>
-      <Col xs={22} sm={16} md={12} lg={11} xl={9}>
         <Form
           {...formItemLayout}
           form={form}
@@ -71,6 +69,7 @@ const RegistrationForm = (props) => {
           scrollToFirstError
         >
           <Form.Item
+            ref={(input) => input && input.focus()}
             name="fName"
             rules={[
               {

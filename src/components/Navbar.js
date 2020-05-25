@@ -102,7 +102,7 @@ class Navbar extends Component {
         <Search
           ref={(input) => input && input.focus()}
           className="searchBar"
-          placeholder="Search plants"
+          placeholder={isLoggedIn ? "Search plants" : 'Login to search plants'}
           enterButton="search"
           // loading
           size="large"
