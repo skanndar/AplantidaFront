@@ -1,8 +1,7 @@
 import React from "react";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
-import { LikeOutlined, HeartTwoTone } from "@ant-design/icons";
-import Icon from "@ant-design/icons/lib/components/AntdIcon";
+import { HeartTwoTone } from "@ant-design/icons";
 
 const { Meta } = Card;
 const IconText = ({ icon, text }) => (

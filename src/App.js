@@ -13,10 +13,10 @@ import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar";
 
-import { Layout, Row, Col } from "antd";
+import { Layout } from "antd";
 import NotFound from "./pages/NotFound";
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 class App extends Component {
   render() {
@@ -62,9 +62,3 @@ class App extends Component {
 }
 
 export default App;
-
-//  {/* <Breadcrumb style={{ margin: "16px 0" }}>
-//             <Breadcrumb.Item>Home</Breadcrumb.Item>
-//             <Breadcrumb.Item>List</Breadcrumb.Item>
-//             <Breadcrumb.Item>App</Breadcrumb.Item>
-//           </Breadcrumb> */}

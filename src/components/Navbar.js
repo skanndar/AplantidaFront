@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { withAuth } from "./../lib/Auth";
-import {
-  SearchOutlined,
-  SyncOutlined,
-  UserOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
-import { Input, Layout, Menu, Alert, Col, Avatar } from "antd";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Input, Layout, Menu, Alert, Avatar } from "antd";
 import axios from "axios";
 import AplantidaIcon from "./AplantidaIcon";
 
@@ -118,7 +113,7 @@ class Navbar extends Component {
           }}
         ></Search>
         {errorMessage ? (
-          <Alert message={errorMessage} type="error" showIcon closable/>
+          <Alert message={errorMessage} type="error" showIcon closable />
         ) : null}
       </Header>
     );

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withAuth } from "./../lib/Auth";
 import PlantCard from "../components/PlantCard";
-import { Row, Col, List } from "antd";
+import { List } from "antd";
 import FilterDrawer from "../components/FilterDrawer";
 
 class PlantsList extends Component {

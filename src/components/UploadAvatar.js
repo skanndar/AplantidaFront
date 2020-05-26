@@ -1,7 +1,6 @@
 import { Upload, message } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { Component } from "react";
-import axios from "axios";
 import { withAuth } from "../lib/Auth";
 
 function getBase64(img, callback) {

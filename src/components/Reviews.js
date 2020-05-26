@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { List, Avatar, Space, Rate, Button } from "antd";
 import { withAuth } from "../lib/Auth";
 import {
@@ -102,24 +102,3 @@ function Reviews(props) {
 }
 
 export default withAuth(Reviews);
-
-// const listData = [];
-// for (let i = 0; i < 15; i++) {
-//   listData.push({
-//     href: "#",
-//     title: `Aplantida review simulation ${i}`,
-//     avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-//     description: "ALIADOS",
-//     content: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto incidunt error perspiciatis obcaecati accusamus hic a quam! Accusamus dicta ad praesentium nam consequuntur optio architecto ea, perferendis ipsum, cum tempore.`,
-//   });
-// }
-
-// REVIEW MODEL
-//   {
-//     title: `Aplantida review simulation ${i}`,
-//     text: String,
-//     user: {type: Schema.Types.ObjectId,ref:'User'},
-//     plant: {type: Schema.Types.ObjectId,ref:'Plant'},
-//     likes: Number,
-//     stars: Number
-//   }

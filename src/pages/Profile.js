@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { withAuth } from "../lib/Auth";
-import { List, Avatar, Space, Rate, Row, Col, Carousel, Card } from "antd";
-import { MessageOutlined } from "@ant-design/icons";
-import { DeleteOutlined, HeartTwoTone } from "@ant-design/icons";
+import { Row, Col, Card } from "antd";
 import axios from "axios";
 import Reviews from "../components/Reviews";
 import UploaderAvatar from "./../components/UploadAvatar";
 import EdiatableText from "../components/EdiatableText";
-
 
 const tabList = [
   {
@@ -46,7 +43,7 @@ class Profile extends Component {
         withCredentials: true,
       })
       .then((response) => {
-        console.log('response.data :>> ', response.data);
+        console.log("response.data :>> ", response.data);
         const user = response.data;
         this.setState({ user });
       })
@@ -99,7 +96,7 @@ class Profile extends Component {
             </Row>
           </>
         ),
-        tab2: <Reviews data ={user} {...this.props}></Reviews>,
+        tab2: <Reviews data={user} {...this.props}></Reviews>,
       };
     }
 
@@ -126,21 +123,5 @@ class Profile extends Component {
     ) : null;
   }
 }
-
-// class Profile extends Component {
-//   render() {
-//     console.log("this.props :>> ", this.props);
-//     return (
-//       <Row>
-//         <Col>
-//           <h1>Profile</h1>
-//           {this.props.isLoggedIn ? (
-//             <h3>Username: {this.props.user.fName}</h3>
-//           ) : null}
-//         </Col>
-//       </Row>
-//     );
-//   }
-// }
 
 export default withAuth(Profile);
