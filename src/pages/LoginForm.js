@@ -1,7 +1,7 @@
 import React from "react";
 import { withAuth } from "../lib/Auth";
 
-import { Form, Input, Button, Checkbox, Row, Col } from "antd";
+import { Form, Input, Button, Checkbox, Row, Col, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 const LoginForm = (props) => {
@@ -10,6 +10,7 @@ const LoginForm = (props) => {
     props.login(email, password);
     console.log("Received values of form: ", values);
   };
+  const { errorMessage } = props;
 
   return (
     <Row className="loginRow" justify="center" align="middle">
@@ -75,6 +76,9 @@ const LoginForm = (props) => {
             Or <a href="/signup">register now!</a>
           </Form.Item>
         </Form>
+        {errorMessage ? (
+          <Alert message={errorMessage} type="error" showIcon closable />
+        ) : null}
       </Col>
     </Row>
   );

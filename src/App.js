@@ -31,7 +31,7 @@ class App extends Component {
           >
             <div
               className="site-layout-background"
-              style={{ padding: 14, minHeight: "75vh" }}
+              style={{ padding: 14, minHeight: "73vh" }}
             >
               <Switch>
                 <Route exact path="/" component={Home} />

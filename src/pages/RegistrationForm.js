@@ -1,7 +1,7 @@
 import React from "react";
 import { withAuth } from "../lib/Auth";
 
-import { Form, Input, Tooltip, Row, Col, Checkbox, Button, Radio } from "antd";
+import { Form, Input, Alert, Row, Col, Checkbox, Button, Radio } from "antd";
 import { KeyOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
 
 const formItemLayout = {
@@ -203,7 +203,9 @@ const RegistrationForm = (props) => {
             </Button>
           </Form.Item>
         </Form>
-        {errorMessage ? <h1>{errorMessage}</h1> : null}
+        {errorMessage ? (
+          <Alert message={errorMessage} type="error" showIcon closable />
+        ) : null}
       </Col>
     </Row>
   );

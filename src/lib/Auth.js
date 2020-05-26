@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-import { Skeleton } from "antd";
+import { Spin, Row, Col } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const { Consumer, Provider } = React.createContext();
 
@@ -44,10 +45,20 @@ class AuthProvider extends React.Component {
       })
       .then((response) => {
         const user = response.data;
-        this.setState({ isLoggedIn: true, isLoading: false, user });
+        this.setState({
+          isLoggedIn: true,
+          isLoading: false,
+          user,
+          errorMessage: undefined,
+        });
       })
       .catch((err) =>
-        this.setState({ isLoggedIn: false, isLoading: false, user: null })
+        this.setState({
+          isLoggedIn: false,
+          isLoading: false,
+          user: null,
+          // errorMessage: "Something went wrong, try again!",
+        })
       );
   }
 
@@ -58,10 +69,20 @@ class AuthProvider extends React.Component {
       })
       .then((response) => {
         const user = response.data;
-        this.setState({ isLoggedIn: true, isLoading: false, user });
+        this.setState({
+          isLoggedIn: true,
+          isLoading: false,
+          user,
+          errorMessage: undefined,
+        });
       })
       .catch((err) =>
-        this.setState({ isLoggedIn: false, isLoading: false, user: null })
+        this.setState({
+          isLoggedIn: false,
+          isLoading: false,
+          user: null,
+          errorMessage: "Something went wrong, try again!",
+        })
       );
   };
 
@@ -74,9 +95,21 @@ class AuthProvider extends React.Component {
       )
       .then((response) => {
         const user = response.data;
-        this.setState({ isLoggedIn: true, isLoading: false, user });
+        this.setState({
+          isLoggedIn: true,
+          isLoading: false,
+          user,
+          errorMessage: undefined,
+        });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({
+          isLoggedIn: false,
+          isLoading: false,
+          errorMessage: "Something went wrong, try again!",
+        });
+        console.log(err);
+      });
   };
 
   signup = (agreement, confirm, email, fName, genre, lName, password) => {
@@ -117,6 +150,7 @@ class AuthProvider extends React.Component {
   };
 
   render() {
+    const antIcon = <LoadingOutlined style={{ fontSize: 99 }} spin />;
     const { user, isLoggedIn, isLoading, errorMessage } = this.state;
     const { login, signup, logout, me } = this;
 
@@ -134,7 +168,11 @@ class AuthProvider extends React.Component {
         }}
       >
         {isLoading ? (
-          <Skeleton active paragraph={{ rows: 16 }} />
+          <Row className="loading" justify="center" align="middle">
+            <Col>
+              <Spin indicator={antIcon} />
+            </Col>
+          </Row>
         ) : (
           this.props.children
         )}

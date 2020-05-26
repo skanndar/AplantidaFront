@@ -7,7 +7,7 @@ import {
   UserOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { Input, Layout, Menu, Row, Col, Avatar } from "antd";
+import { Input, Layout, Menu, Alert, Col, Avatar } from "antd";
 import axios from "axios";
 import AplantidaIcon from "./AplantidaIcon";
 
@@ -18,6 +18,7 @@ const { Search } = Input;
 class Navbar extends Component {
   state = {
     plants: [],
+    errorMessage: undefined,
   };
 
   search = (searchStr) => {
@@ -29,14 +30,22 @@ class Navbar extends Component {
       )
       .then((response) => {
         console.log(response);
-        this.setState({ plants: response.data }, () => {
-          this.props.history.push({
-            pathname: "/search",
-            state: { plants: this.state.plants },
-          });
-        });
+        this.setState(
+          { plants: response.data, errorMessage: undefined },
+          () => {
+            this.props.history.push({
+              pathname: "/search",
+              state: { plants: this.state.plants },
+            });
+          }
+        );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({
+          errorMessage: "Please login or register to be able to search",
+        });
+        console.log(err);
+      });
   };
 
   render() {
@@ -44,6 +53,7 @@ class Navbar extends Component {
     // and are injected by the withAuth HOC
     const { logout, isLoggedIn, isLoading, user } = this.props;
     const { search } = this;
+    const { errorMessage } = this.state;
 
     return (
       <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
@@ -107,6 +117,9 @@ class Navbar extends Component {
             search(value);
           }}
         ></Search>
+        {errorMessage ? (
+          <Alert message={errorMessage} type="error" showIcon closable/>
+        ) : null}
       </Header>
     );
   }
