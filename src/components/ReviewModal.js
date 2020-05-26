@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Form, Input, Modal, Button, Rate } from "antd";
 import { HeartOutlined } from "@ant-design/icons";
 import ImageDragger from "./ImageDragger";
+import Axios from "axios";
+import { withAuth } from "../lib/Auth";
 
 const layout = {
   wrapperCol: {
@@ -21,6 +23,25 @@ class ReviewModal extends Component {
 
   onFinish = (values) => {
     console.log("this is the new review --> ", values);
+    const { title, text, stars } = values;
+    const user = this.props.user._id;
+    const plant = this.props.plant._id;
+
+    Axios.post(
+      process.env.REACT_APP_API_URL + `/review`,
+      { title, text, stars, user, plant },
+      {
+        withCredentials: true,
+      }
+    )
+      .then((response) => {
+        console.log("response.data :>> ", response.data);
+        const reviewId = response.data._id;
+        this.handleOk();
+        this.props.search();
+      })
+
+      .catch((err) => console.log("error :>> ", err));
   };
 
   showModal = () => {
@@ -59,11 +80,11 @@ class ReviewModal extends Component {
         <Modal
           title="New Review"
           visible={visible}
-          onOk={() => {
-            this.handleOk();
-            this.onFinish();
-          }}
-          okText="Send"
+          // onOk={() => {
+          //   this.handleOk();
+          //   this.onFinish();
+          // }}
+          // okText="Send"
           confirmLoading={confirmLoading}
           onCancel={this.handleCancel}
           footer={null}
@@ -72,10 +93,7 @@ class ReviewModal extends Component {
             <Form
               {...layout}
               name="nest-messages"
-              onFinish={() => {
-                this.handleOk();
-                this.onFinish();
-              }}
+              onFinish={this.onFinish}
               validateMessages={validateMessages}
             >
               <p>{ModalText}</p>
@@ -89,13 +107,10 @@ class ReviewModal extends Component {
               <Form.Item name="title" rules={[{ required: true }]}>
                 <Input placeholder="Title" />
               </Form.Item>
-              <Form.Item
-                name={["text", "introduction"]}
-                rules={[{ required: true }]}
-              >
+              <Form.Item name="text" rules={[{ required: true }]}>
                 <Input.TextArea placeholder="Write your comment here..." />
               </Form.Item>
-              <Form.Item name={["image", "introduction"]}>
+              <Form.Item name="image">
                 <ImageDragger />
               </Form.Item>
               <Form.Item wrapperCol={{ ...layout.wrapperCol }}>
@@ -111,4 +126,4 @@ class ReviewModal extends Component {
   }
 }
 
-export default ReviewModal;
+export default withAuth(ReviewModal);

@@ -7,7 +7,6 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 const LoginForm = (props) => {
   const onFinish = (values) => {
     const { email, password } = values;
-    console.log("props :>> ", props);
     props.login(email, password);
     console.log("Received values of form: ", values);
   };
@@ -60,7 +59,7 @@ const LoginForm = (props) => {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <a className="login-form-forgot" href="">
+            <a className="login-form-forgot" href="#">
               Forgot password
             </a>
           </Form.Item>

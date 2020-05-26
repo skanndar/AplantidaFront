@@ -162,7 +162,7 @@ class PlantDetail extends Component {
               <Row style={{ justifyContent: "space-between" }}>
                 <h1> {plant.latinName}</h1>
                 {this.state.key === "tab2" ? (
-                  <ReviewModal plant={plant} />
+                  <ReviewModal search={this.search} plant={plant} />
                 ) : null}
               </Row>
             </>
