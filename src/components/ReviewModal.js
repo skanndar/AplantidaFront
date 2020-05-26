@@ -27,6 +27,7 @@ class ReviewModal extends Component {
     const user = this.props.user._id;
     const plant = this.props.plant._id;
 
+    // Add review
     Axios.post(
       process.env.REACT_APP_API_URL + `/review`,
       { title, text, stars, user, plant },
@@ -35,10 +36,10 @@ class ReviewModal extends Component {
       }
     )
       .then((response) => {
-        console.log("response.data :>> ", response.data);
-        const reviewId = response.data._id;
+        this.props.addReview(response.data);
+        // this.props.search();
+        console.log("response.data from review :>> ", response.data);
         this.handleOk();
-        this.props.search();
       })
 
       .catch((err) => console.log("error :>> ", err));
@@ -99,7 +100,7 @@ class ReviewModal extends Component {
               <p>{ModalText}</p>
               <Form.Item name="stars" rules={[{ required: true }]}>
                 <Rate
-                  defaultValue={parseInt(Math.random() * 6)}
+                  initialValues={parseInt(Math.random() * 6)}
                   character={<HeartOutlined />}
                   allowHalf
                 />

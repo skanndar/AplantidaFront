@@ -5,7 +5,6 @@ import {
   MessageOutlined,
   LikeOutlined,
   HeartOutlined,
-  DeleteOutlined,
   DeleteTwoTone,
 } from "@ant-design/icons";
 import Axios from "axios";

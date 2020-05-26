@@ -30,6 +30,17 @@ class PlantDetail extends Component {
     key: "tab1",
   };
 
+  addReview = (review) => {
+    console.log("review :>> ", review);
+    const plantCopy = { ...this.state.plant };
+    plantCopy.reviews.unshift(review);
+    this.setState({ plant: plantCopy });
+  };
+
+  // shouldComponentUpdate(nextState) {
+  //   return this.state.reviews !== nextState.reviews;
+  // }
+
   search = () => {
     //Get the id from props.match.params.id
     const name = this.props.match.params.latinName;
@@ -41,12 +52,13 @@ class PlantDetail extends Component {
       .then((response) => {
         console.log("response", response);
         this.setState({
-          plant: response.data[0],
-          reviews: response.data[0].reviews,
+          plant: response.data,
+          reviews: response.data.reviews,
         });
       })
       .catch((err) => console.log(err));
   };
+
   componentDidMount() {
     this.search();
   }
@@ -162,7 +174,11 @@ class PlantDetail extends Component {
               <Row style={{ justifyContent: "space-between" }}>
                 <h1> {plant.latinName}</h1>
                 {this.state.key === "tab2" ? (
-                  <ReviewModal search={this.search} plant={plant} />
+                  <ReviewModal
+                    addReview={this.addReview}
+                    search={this.search}
+                    plant={plant}
+                  />
                 ) : null}
               </Row>
             </>

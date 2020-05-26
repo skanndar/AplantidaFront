@@ -28,20 +28,6 @@ class UploadAvatar extends Component {
     imageUrl: this.props.user.image,
   };
 
-  // shouldComponentUpdate(nextProps) {
-  //   console.log("nextProps :>> ", nextProps);
-  //   console.log(
-  //     "nextProps.user !== this.props.user :>> ",
-  //     nextProps.user.image !== this.props.user.image
-  //   );
-  //   return nextProps.user.image !== this.props.user.image;
-  // }
-
-  // componentDidUpdate() {
-  //   console.log("this.props.me() :>> ", this.props.me());
-  //   this.props.me();
-  // }
-
   handleChange = (info) => {
     console.log("info :>> ", info);
     if (info.file.status === "uploading") {
