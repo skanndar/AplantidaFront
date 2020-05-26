@@ -68,7 +68,7 @@ function Reviews(props) {
             />,
             <IconText
               icon={MessageOutlined}
-              text={parseInt(Math.random() * 144 * 9)}
+              text={item.likes}
               key="list-vertical-message"
             />,
           ]}
@@ -81,11 +81,11 @@ function Reviews(props) {
           }
         >
           <List.Item.Meta
-            avatar={<Avatar src={item.avatar} />}
+            avatar={<Avatar src={item.user.image} />}
             title={
               <>
                 <a href={item.href}>{item.title}</a>{" "}
-                {props.user._id === item.user ? (
+                {props.user._id === item.user._id ? (
                   <Button onClick={() => handleDelete(item._id)} type="ghost">
                     <DeleteTwoTone twoToneColor="#43bd26" />
                   </Button>

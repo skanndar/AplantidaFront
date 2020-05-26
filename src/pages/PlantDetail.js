@@ -167,7 +167,7 @@ class PlantDetail extends Component {
               {
                 <IconText
                   icon={HeartTwoTone}
-                  text={parseInt(Math.random() * 144 * 9)}
+                  text={plant.liked}
                   key="list-vertical-like-o"
                 />
               }

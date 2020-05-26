@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Modal, Button, Rate } from "antd";
+import { Form, Input, Modal, Button, Rate, Alert } from "antd";
 import { HeartOutlined } from "@ant-design/icons";
 import ImageDragger from "./ImageDragger";
 import Axios from "axios";
@@ -36,10 +36,10 @@ class ReviewModal extends Component {
       }
     )
       .then((response) => {
+        this.handleOk();
         this.props.addReview(response.data);
         // this.props.search();
         console.log("response.data from review :>> ", response.data);
-        this.handleOk();
       })
 
       .catch((err) => console.log("error :>> ", err));
@@ -52,16 +52,24 @@ class ReviewModal extends Component {
   };
 
   handleOk = () => {
-    this.setState({
-      ModalText: "The modal will be closed after two seconds",
-      confirmLoading: true,
-    });
-    setTimeout(() => {
+    let sec = 4;
+    const intervalId = setInterval(() => {
       this.setState({
-        visible: false,
-        confirmLoading: false,
+        ModalText: `Success ... closing in  ${sec}`,
+        confirmLoading: true,
       });
-    }, 2000);
+      sec--;
+    }, 1000);
+
+    setTimeout(() => {
+      this.setState(
+        {
+          visible: false,
+          confirmLoading: false,
+        },
+        () => clearInterval(intervalId)
+      );
+    }, 5000);
   };
 
   handleCancel = () => {
@@ -97,7 +105,9 @@ class ReviewModal extends Component {
               onFinish={this.onFinish}
               validateMessages={validateMessages}
             >
-              <p>{ModalText}</p>
+              {confirmLoading ? (
+                <Alert message={ModalText} type="success" />
+              ) : null}
               <Form.Item name="stars" rules={[{ required: true }]}>
                 <Rate
                   initialValues={parseInt(Math.random() * 6)}

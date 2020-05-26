@@ -139,12 +139,31 @@ table {
 }
 
 .homeLogo img {
-  width: 80vw;
+  width: 70vw;
   max-width: 500px;
   min-width: 150px;
 }
 .containerLogo {
   padding: 0 15px;
+}
+
+.logoNav {
+  margin-top: 7px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logoNav {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .logoRow {
@@ -286,4 +305,36 @@ table {
 
 .ant-form-horizontal .ant-form-item-control {
   flex: 1 1;
+}
+
+.cls-1,
+.cls-6,
+.cls-7 {
+  fill: none;
+}
+.cls-2 {
+  fill: #90c25e;
+}
+.cls-3 {
+  fill: #fff;
+}
+.cls-4 {
+  fill: #61b522;
+}
+.cls-5 {
+  fill: #e3f206;
+}
+.cls-6,
+.cls-7 {
+  stroke: #fff;
+  stroke-miterlimit: 10;
+}
+.cls-6 {
+  stroke-width: 0.66px;
+}
+.cls-7 {
+  stroke-width: 0.66px;
+}
+.cls-8 {
+  opacity: 0;
 }

@@ -1,8 +1,16 @@
 import React from "react";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
+import { LikeOutlined, HeartTwoTone } from "@ant-design/icons";
+import Icon from "@ant-design/icons/lib/components/AntdIcon";
 
 const { Meta } = Card;
+const IconText = ({ icon, text }) => (
+  <div style={{ textAlign: "right", paddingBottom: "5px" }}>
+    {React.createElement(icon)}
+    {text}
+  </div>
+);
 
 export default function PlantCard(props) {
   return (
@@ -33,6 +41,11 @@ export default function PlantCard(props) {
           <Meta
             title={props.latinName}
             description={props.characteristics.habitats}
+          />
+          <IconText
+            icon={HeartTwoTone}
+            text={props.liked}
+            key="list-vertical-like-o"
           />
         </Card>
       </Link>

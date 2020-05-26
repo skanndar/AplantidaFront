@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { Input, Layout, Menu, Row, Col, Avatar } from "antd";
 import axios from "axios";
+import AplantidaIcon from "./AplantidaIcon";
 
 const { Header } = Layout;
 
@@ -18,7 +19,6 @@ class Navbar extends Component {
   state = {
     plants: [],
   };
-
 
   search = (searchStr) => {
     axios
@@ -47,11 +47,11 @@ class Navbar extends Component {
 
     return (
       <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-        <div className="containerLogo">
+        <span className="containerLogo">
           <Link to={"/"}>
-            <img src="/aplantidalogo.svg" className="logo" alt="logo" />
+            <AplantidaIcon className="logoNav" style={{ fontSize: "50px" }} />
           </Link>
-        </div>
+        </span>
 
         {!isLoading ? (
           isLoggedIn ? (
@@ -61,11 +61,11 @@ class Navbar extends Component {
               mode="horizontal"
               defaultSelectedKeys={["2"]}
             >
-              <Menu.Item key="1">
+              {/* <Menu.Item key="1">
                 <Link to={"/plants"}>
                   <SyncOutlined spin />
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item key="2">
                 <Link to={"/profile"}>
                   {user.image ? (
