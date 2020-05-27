@@ -18,11 +18,11 @@ export default function PlantCard(props) {
         <Card
           hoverable
           size="small"
-          style={{ width: "20vw", minWidth: 288 }}
+          style={{ width: "20vw", minWidth: 288, minHeight: 328 }}
           cover={
             <div
               style={{
-                height: 220,
+                height: 160,
                 width: "20vw",
                 minWidth: 288,
                 overflow: "hidden",

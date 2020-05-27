@@ -145,13 +145,17 @@ class PlantDetail extends Component {
     return plant ? (
       <Row className="plantDetail" justify="center" align="top">
         <Col>
-          <Carousel autoplay>
+          <Carousel autoplay style={{ maxHeight: "400px" }}>
             {plant.img.map((img) => {
               return (
                 <>
                   <img
                     src={img}
-                    style={{ minWidth: "288px" }}
+                    style={{
+                      minWidth: "100vw",
+                      maxHeight: "auto",
+                      transform: "translate(-0%, -30%)",
+                    }}
                     alt={plant.latinName}
                   />
                 </>

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { withAuth } from "../lib/Auth";
-import { Row, Col, Card } from "antd";
+import { Row, Col, Card, Avatar } from "antd";
 import axios from "axios";
 import Reviews from "../components/Reviews";
 import UploaderAvatar from "./../components/UploadAvatar";
 import EdiatableText from "../components/EdiatableText";
+import { Link } from "react-router-dom";
 
 const tabList = [
   {
@@ -83,10 +84,14 @@ class Profile extends Component {
                   {user.favorites.map((favorite) => {
                     return (
                       <>
-                        <a href={`/plant/${favorite.latinName}`}>
-                          {" "}
-                          {favorite.latinName}{" "}
-                        </a>
+                        <Link to={`/plant/${favorite.latinName}`}>
+                          <Avatar
+                            style={{ margin: 2 }}
+                            src={favorite.img[0]}
+                            shape="square"
+                          />{" "}
+                          {favorite.latinName}
+                        </Link>
                         <br />
                       </>
                     );

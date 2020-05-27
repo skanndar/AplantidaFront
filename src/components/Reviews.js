@@ -8,6 +8,7 @@ import {
   DeleteTwoTone,
 } from "@ant-design/icons";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 function Reviews(props) {
   const [reviews, setReviews] = useState(props.data.reviews);
@@ -84,7 +85,7 @@ function Reviews(props) {
             avatar={<Avatar src={item.user.image} />}
             title={
               <>
-                <a href={item.href}>{item.title}</a>{" "}
+                <Link to="/profile">{item.title}</Link>{" "}
                 {props.user._id === item.user._id ? (
                   <Button onClick={() => handleDelete(item._id)} type="ghost">
                     <DeleteTwoTone twoToneColor="#43bd26" />
@@ -92,7 +93,11 @@ function Reviews(props) {
                 ) : null}
               </>
             }
-            description={props.data.latinName}
+            description={
+              <Link to={`/plant/${item.plant.latinName}`}>
+                {item.plant.latinName}
+              </Link>
+            }
           />
           {item.text}
         </List.Item>

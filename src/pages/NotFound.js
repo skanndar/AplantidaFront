@@ -1,5 +1,6 @@
 import { Result, Button } from "antd";
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class NotFound extends Component {
   render() {
@@ -9,9 +10,9 @@ export default class NotFound extends Component {
         title="404"
         subTitle="Sorry, the page you visited does not exist."
         extra={
-          <a href="/">
+          <Link to="/">
             <Button type="primary">Back Home</Button>
-          </a>
+          </Link>
         }
       />
     );

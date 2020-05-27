@@ -3,6 +3,7 @@ import { withAuth } from "../lib/Auth";
 
 import { Form, Input, Alert, Row, Col, Checkbox, Button, Radio } from "antd";
 import { KeyOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const formItemLayout = {
   labelCol: {
@@ -194,7 +195,7 @@ const RegistrationForm = (props) => {
             {...tailFormItemLayout}
           >
             <Checkbox>
-              I have read the <a href="#">agreement</a>
+              I have read the <Link to="#">agreement</Link>
             </Checkbox>
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>

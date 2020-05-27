@@ -3,6 +3,7 @@ import { withAuth } from "../lib/Auth";
 
 import { Form, Input, Button, Checkbox, Row, Col, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const LoginForm = (props) => {
   const onFinish = (values) => {
@@ -60,9 +61,9 @@ const LoginForm = (props) => {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <a className="login-form-forgot" href="#">
+            <Link className="login-form-forgot" to="#">
               Forgot password
-            </a>
+            </Link>
           </Form.Item>
 
           <Form.Item>
@@ -73,7 +74,7 @@ const LoginForm = (props) => {
             >
               Log in
             </Button>
-            Or <a href="/signup">register now!</a>
+            Or <Link to="/signup">register now!</Link>
           </Form.Item>
         </Form>
         {errorMessage ? (
