@@ -3,25 +3,18 @@ import { Typography } from "antd";
 
 const { Paragraph } = Typography;
 
-export default class EditableText extends Component {
-  state = {
-    str: null,
-  };
+function EditableText(props) {
+  // componentDidMount() {
+  //   this.setState({ str: this.props.text });
+  // }
 
-  componentDidMount() {
-    this.setState({ str: this.props.text });
-  }
-  onChange = (str) => {
+  const onChange = (str) => {
     console.log("Content change:", str);
-    this.setState({ str });
-    // this.props.updatedUserData()
+    // this.setState({ str });
+    props.updateUserData(props.fieldName, str);
   };
 
-  render() {
-    return (
-      <Paragraph editable={{ onChange: this.onChange }}>
-        {this.state.str}
-      </Paragraph>
-    );
-  }
+  return <Paragraph editable={{ onChange: onChange }}>{props.text}</Paragraph>;
 }
+
+export default EditableText;

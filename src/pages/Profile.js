@@ -36,18 +36,25 @@ class Profile extends Component {
     this.setState({ [type]: key });
   };
 
-  updateUserData = () => {
-    this.setState({});
-    axios
-      .put(process.env.REACT_APP_API_URL + "/auth/profile", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log("response.data :>> ", response.data);
-        const user = response.data;
-        this.setState({ user });
-      })
-      .catch((err) => console.log("error :>> ", err));
+  updateUserData = (key, value) => {
+    const userCopy = { ...this.state.user };
+    userCopy[key] = value;
+    this.setState({ user: userCopy }, () => {
+      const { fName, lName, image, email, genre } = this.state.user;
+      axios
+        .put(
+          process.env.REACT_APP_API_URL + "/api/user",
+          { fName, lName, image, email, genre },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          console.log("response.data put :>> ", response.data);
+          const user = response.data;
+        })
+        .catch((err) => console.log("error :>> ", err));
+    });
   };
 
   userProfile = () => {
@@ -92,6 +99,7 @@ class Profile extends Component {
                   <EditableText
                     updateUserData={this.updateUserData}
                     text={user.fName}
+                    fieldName="fName"
                   />
                 </Card>
               </Col>
@@ -100,6 +108,7 @@ class Profile extends Component {
                   <EditableText
                     updateUserData={this.updateUserData}
                     text={user.lName}
+                    fieldName="lName"
                   />
                 </Card>
               </Col>
@@ -108,6 +117,7 @@ class Profile extends Component {
                   <EditableText
                     updateUserData={this.updateUserData}
                     text={user.email}
+                    fieldName="email"
                   />
                 </Card>
               </Col>
@@ -116,6 +126,7 @@ class Profile extends Component {
                   <EditableText
                     updateUserData={this.updateUserData}
                     text={user.genre}
+                    fieldName="genre"
                   />
                 </Card>
               </Col>
@@ -141,7 +152,10 @@ class Profile extends Component {
             </Row>
           </>
         ),
-        tab2: <Reviews data={user}></Reviews>,
+        tab2: (
+          //Uros trick to rerender
+          <Reviews key={Math.floor(Math.random() * 1000)} data={user}></Reviews>
+        ),
       };
     }
 
