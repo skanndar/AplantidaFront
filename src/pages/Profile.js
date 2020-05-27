@@ -4,7 +4,7 @@ import { Row, Col, Card, Avatar } from "antd";
 import axios from "axios";
 import Reviews from "../components/Reviews";
 import UploaderAvatar from "./../components/UploadAvatar";
-import EdiatableText from "../components/EdiatableText";
+import EditableText from "../components/EditableText";
 import { Link } from "react-router-dom";
 
 const tabList = [
@@ -27,8 +27,6 @@ const IconText = ({ icon, text }) => (
 
 class Profile extends Component {
   state = {
-    plant: null,
-    reviews: null,
     key: "tab1",
     user: null,
   };
@@ -36,6 +34,35 @@ class Profile extends Component {
   onTabChange = (key, type) => {
     console.log(key, type);
     this.setState({ [type]: key });
+  };
+
+  updateUserData = () => {
+    this.setState({});
+    axios
+      .put(process.env.REACT_APP_API_URL + "/auth/profile", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log("response.data :>> ", response.data);
+        const user = response.data;
+        this.setState({ user });
+      })
+      .catch((err) => console.log("error :>> ", err));
+  };
+
+  userProfile = () => {
+    console.log("iam here :>> ");
+
+    axios
+      .get(process.env.REACT_APP_API_URL + "/auth/profile", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log("response.data :>> ", response.data);
+        const user = response.data;
+        this.setState({ user });
+      })
+      .catch((err) => console.log("error :>> ", err));
   };
 
   componentDidMount() {
@@ -52,7 +79,8 @@ class Profile extends Component {
   }
 
   render() {
-    const { plant, reviews, user } = this.state;
+    const { user } = this.state;
+    console.log("user from profile reviews :>> ", user);
     let contentList;
     if (user) {
       contentList = {
@@ -61,22 +89,34 @@ class Profile extends Component {
             <Row gutter={[16, 16]}>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Name">
-                  <EdiatableText text={user.fName} />
+                  <EditableText
+                    updateUserData={this.updateUserData}
+                    text={user.fName}
+                  />
                 </Card>
               </Col>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Lastname">
-                  <EdiatableText text={user.lName} />
+                  <EditableText
+                    updateUserData={this.updateUserData}
+                    text={user.lName}
+                  />
                 </Card>
               </Col>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Email">
-                  <EdiatableText text={user.email} />
+                  <EditableText
+                    updateUserData={this.updateUserData}
+                    text={user.email}
+                  />
                 </Card>
               </Col>
               <Col>
                 <Card style={{ marginTop: 16 }} type="inner" title="Genre">
-                  <EdiatableText text={user.genre} />
+                  <EditableText
+                    updateUserData={this.updateUserData}
+                    text={user.genre}
+                  />
                 </Card>
               </Col>
               <Col>
@@ -101,7 +141,7 @@ class Profile extends Component {
             </Row>
           </>
         ),
-        tab2: <Reviews data={user} {...this.props}></Reviews>,
+        tab2: <Reviews data={user}></Reviews>,
       };
     }
 
@@ -112,7 +152,11 @@ class Profile extends Component {
         <Card
           style={{ width: "100%" }}
           title={
-            <UploaderAvatar size={256} shape="square">
+            <UploaderAvatar
+              updateUser={this.userProfile}
+              size={256}
+              shape="square"
+            >
               {user.image}
             </UploaderAvatar>
           }

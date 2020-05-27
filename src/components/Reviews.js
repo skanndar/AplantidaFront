@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { List, Avatar, Space, Rate, Button } from "antd";
 import { withAuth } from "../lib/Auth";
 import {
@@ -21,7 +21,7 @@ function Reviews(props) {
   );
 
   const handleDelete = (reviewId) => {
-    Axios.delete(process.env.REACT_APP_API_URL + `/review/${reviewId}`, {
+    Axios.delete(process.env.REACT_APP_API_URL + `/api/review/${reviewId}`, {
       withCredentials: true,
     })
       .then((response) => {
@@ -106,4 +106,4 @@ function Reviews(props) {
   );
 }
 
-export default withAuth(Reviews);
+export default React.memo(withAuth(Reviews));

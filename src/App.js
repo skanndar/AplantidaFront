@@ -34,6 +34,11 @@ class App extends Component {
               style={{ padding: 14, minHeight: "73vh" }}
             >
               <Switch>
+                <PrivateRoute
+                  exact
+                  path="/plant/:latinName"
+                  component={PlantDetail}
+                />
                 <Route exact path="/" component={Home} />
                 <PublicRoute
                   exact
@@ -43,11 +48,6 @@ class App extends Component {
                 <PublicRoute exact path="/login" component={LoginForm} />
                 <PrivateRoute exact path="/profile" component={Profile} />
                 <PrivateRoute exact path="/search" component={PlantsList} />
-                <PrivateRoute
-                  exact
-                  path="/plant/:latinName"
-                  component={PlantDetail}
-                />
                 <Route component={NotFound} />
               </Switch>
             </div>

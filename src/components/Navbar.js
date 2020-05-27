@@ -19,7 +19,7 @@ class Navbar extends Component {
   search = (searchStr) => {
     axios
       .post(
-        process.env.REACT_APP_API_URL + "/plants",
+        process.env.REACT_APP_API_URL + "/api/plants",
         { searchStr },
         { withCredentials: true }
       )

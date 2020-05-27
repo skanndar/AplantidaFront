@@ -42,7 +42,8 @@ class UploadAvatar extends Component {
             loading: false,
           },
           () => {
-            this.props.me();
+            this.props.me()
+            this.props.updateUser()
           }
         )
       );

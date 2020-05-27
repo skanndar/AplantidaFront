@@ -4,6 +4,7 @@ import { HeartTwoTone } from "@ant-design/icons";
 import axios from "axios";
 import Reviews from "../components/Reviews";
 import ReviewModal from "../components/ReviewModal";
+import AplantidaIcon from "../components/AplantidaIcon";
 
 const tabList = [
   {
@@ -28,6 +29,7 @@ class PlantDetail extends Component {
     plant: null,
     reviews: null,
     key: "tab1",
+    isLoading: true,
   };
 
   addReview = (review) => {
@@ -46,7 +48,7 @@ class PlantDetail extends Component {
     const name = this.props.match.params.latinName;
     console.log("plantLatinName :>> ", name);
     axios
-      .get(process.env.REACT_APP_API_URL + `/plant/${name}`, {
+      .get(process.env.REACT_APP_API_URL + `/api/plant/${name}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -54,6 +56,7 @@ class PlantDetail extends Component {
         this.setState({
           plant: response.data,
           reviews: response.data.reviews,
+          isLoading: false,
         });
       })
       .catch((err) => console.log(err));
@@ -70,9 +73,10 @@ class PlantDetail extends Component {
 
   render() {
     const { plant } = this.state;
+    const { isLoading } = this.state;
     console.log("this.state.plant :>> ", this.state.plant);
     let contentList;
-    if (plant) {
+    if (plant && !isLoading) {
       contentList = {
         tab1: (
           <>
@@ -139,6 +143,21 @@ class PlantDetail extends Component {
           </>
         ),
         tab2: <Reviews data={plant}></Reviews>,
+      };
+    } else {
+      contentList = {
+        tab1: (
+          <AplantidaIcon
+            className="logoLoading"
+            style={{ fontSize: "200px" }}
+          />
+        ),
+        tab2: (
+          <AplantidaIcon
+            className="logoLoading"
+            style={{ fontSize: "200px" }}
+          />
+        ),
       };
     }
 

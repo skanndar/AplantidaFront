@@ -29,7 +29,7 @@ class ReviewModal extends Component {
 
     // Add review
     Axios.post(
-      process.env.REACT_APP_API_URL + `/review`,
+      process.env.REACT_APP_API_URL + `/api/review`,
       { title, text, stars, user, plant },
       {
         withCredentials: true,
