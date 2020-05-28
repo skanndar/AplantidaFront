@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { withAuth } from "../lib/Auth";
-import { Row, Col, Card, Avatar } from "antd";
-import axios from "axios";
+import { Row, Col, Card, Avatar, Button } from "antd";
+import Axios from "axios";
 import Reviews from "../components/Reviews";
 import UploaderAvatar from "./../components/UploadAvatar";
 import EditableText from "../components/EditableText";
 import { Link } from "react-router-dom";
+import { DeleteTwoTone } from "@ant-design/icons";
 
 const tabList = [
   {
@@ -18,12 +19,12 @@ const tabList = [
   },
 ];
 
-const IconText = ({ icon, text }) => (
-  <div style={{ textAlign: "right", paddingBottom: "5px" }}>
-    {React.createElement(icon)}
-    {text}
-  </div>
-);
+// const IconText = ({ icon, text }) => (
+//   <div style={{ textAlign: "right", paddingBottom: "5px" }}>
+//     {React.createElement(icon)}
+//     {text}
+//   </div>
+// );
 
 class Profile extends Component {
   state = {
@@ -41,14 +42,13 @@ class Profile extends Component {
     userCopy[key] = value;
     this.setState({ user: userCopy }, () => {
       const { fName, lName, image, email, genre } = this.state.user;
-      axios
-        .put(
-          process.env.REACT_APP_API_URL + "/api/user",
-          { fName, lName, image, email, genre },
-          {
-            withCredentials: true,
-          }
-        )
+      Axios.put(
+        process.env.REACT_APP_API_URL + "/api/user",
+        { fName, lName, image, email, genre },
+        {
+          withCredentials: true,
+        }
+      )
         .then((response) => {
           console.log("response.data put :>> ", response.data);
           const user = response.data;
@@ -60,10 +60,9 @@ class Profile extends Component {
   userProfile = () => {
     console.log("iam here :>> ");
 
-    axios
-      .get(process.env.REACT_APP_API_URL + "/auth/profile", {
-        withCredentials: true,
-      })
+    Axios.get(process.env.REACT_APP_API_URL + "/auth/profile", {
+      withCredentials: true,
+    })
       .then((response) => {
         console.log("response.data :>> ", response.data);
         const user = response.data;
@@ -72,11 +71,32 @@ class Profile extends Component {
       .catch((err) => console.log("error :>> ", err));
   };
 
+  handleDelete = (plantId) => {
+    const userCopy = { ...this.state.user };
+    const newFavorites = userCopy.favorites.filter((plants) => {
+      return plants._id !== plantId;
+    });
+    userCopy.favorites = newFavorites;
+    console.log("userCopy :>> ", userCopy);
+    this.setState({ user: userCopy }, () => {
+      Axios.put(
+        process.env.REACT_APP_API_URL + `/api/user-favorites`,
+        { plantId },
+        {
+          withCredentials: true,
+        }
+      )
+        .then((response) => {
+          console.log("user after deleted favorite :>> ", response.data);
+        })
+        .catch((err) => console.log("error :>> ", err));
+    });
+  };
+
   componentDidMount() {
-    axios
-      .get(process.env.REACT_APP_API_URL + "/auth/profile", {
-        withCredentials: true,
-      })
+    Axios.get(process.env.REACT_APP_API_URL + "/auth/profile", {
+      withCredentials: true,
+    })
       .then((response) => {
         console.log("response.data :>> ", response.data);
         const user = response.data;
@@ -135,15 +155,26 @@ class Profile extends Component {
                   {user.favorites.map((favorite) => {
                     return (
                       <>
-                        <Link to={`/plant/${favorite.latinName}`}>
-                          <Avatar
-                            style={{ margin: 2 }}
-                            src={favorite.img[0]}
-                            shape="square"
-                          />{" "}
-                          {favorite.latinName}
-                        </Link>
-                        <br />
+                        <Row justify="space-between" gutter={32}>
+                          <Col span={18}>
+                            <Link to={`/plant/${favorite.latinName}`}>
+                              <Avatar
+                                style={{ margin: 2 }}
+                                src={favorite.img[0]}
+                                shape="square"
+                              />{" "}
+                              <span>{favorite.latinName}</span>
+                            </Link>
+                          </Col>
+                          <Col span={6}>
+                            <Button
+                              onClick={() => this.handleDelete(favorite._id)}
+                              ghost
+                            >
+                              <DeleteTwoTone twoToneColor="#43bd26" />
+                            </Button>
+                          </Col>
+                        </Row>
                       </>
                     );
                   })}

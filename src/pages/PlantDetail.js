@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { Row, Col, Carousel, Card } from "antd";
-import { HeartTwoTone } from "@ant-design/icons";
+import { Row, Col, Carousel, Card, Button } from "antd";
+import { HeartTwoTone, HeartOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Reviews from "../components/Reviews";
 import ReviewModal from "../components/ReviewModal";
 import AplantidaIcon from "../components/AplantidaIcon";
+import Axios from "axios";
+import { withAuth } from "../lib/Auth";
 
 const tabList = [
   {
@@ -30,6 +32,7 @@ class PlantDetail extends Component {
     reviews: null,
     key: "tab1",
     isLoading: true,
+    favorite: null,
   };
 
   addReview = (review) => {
@@ -53,11 +56,30 @@ class PlantDetail extends Component {
       })
       .then((response) => {
         console.log("response", response);
-        this.setState({
-          plant: response.data,
-          reviews: response.data.reviews,
-          isLoading: false,
-        });
+        const { user } = this.props;
+        const plant = response.data;
+        console.log("plant._id :>> ", plant._id);
+        const checkIfFavorite =
+          user.favorites.filter((favorite) => {
+            console.log("favorite._id :>> ", favorite._id);
+            return favorite._id == plant._id;
+          }).length == 0;
+        console.log("checkIfFavorite :>> ", checkIfFavorite);
+        if (checkIfFavorite) {
+          this.setState({
+            plant: response.data,
+            reviews: response.data.reviews,
+            isLoading: false,
+            favorite: true,
+          });
+        } else {
+          this.setState({
+            plant: response.data,
+            reviews: response.data.reviews,
+            isLoading: false,
+            favorite: false,
+          });
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -71,10 +93,14 @@ class PlantDetail extends Component {
     this.setState({ [type]: key });
   };
 
+  handleClick = () => {
+    this.setState({ favorite: !this.state.favorite });
+    Axios.put();
+  };
+
   render() {
-    const { plant } = this.state;
-    const { isLoading } = this.state;
-    console.log("this.state.plant :>> ", this.state.plant);
+    const { plant, isLoading, favorite } = this.state;
+    console.log("this.state.favorite :>> ", this.state.favorite);
     let contentList;
     if (plant && !isLoading) {
       contentList = {
@@ -187,13 +213,6 @@ class PlantDetail extends Component {
           style={{ width: "100%" }}
           title={
             <>
-              {
-                <IconText
-                  icon={HeartTwoTone}
-                  text={plant.liked}
-                  key="list-vertical-like-o"
-                />
-              }
               <Row style={{ justifyContent: "space-between" }}>
                 <h1> {plant.latinName}</h1>
                 {this.state.key === "tab2" ? (
@@ -203,6 +222,17 @@ class PlantDetail extends Component {
                     plant={plant}
                   />
                 ) : null}
+                <Button onClick={this.handleClick}>
+                  {favorite ? (
+                    <IconText
+                      icon={HeartTwoTone}
+                      // text={plant.liked}
+                      key="list-vertical-like-o"
+                    />
+                  ) : (
+                    <HeartOutlined />
+                  )}
+                </Button>
               </Row>
             </>
           }
@@ -219,4 +249,4 @@ class PlantDetail extends Component {
   }
 }
 
-export default PlantDetail;
+export default withAuth(PlantDetail);

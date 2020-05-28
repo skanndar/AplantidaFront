@@ -48,9 +48,9 @@ class AuthProvider extends React.Component {
         const user = response.data;
         this.setState({
           isLoggedIn: true,
-          isLoading: false,
           user,
           errorMessage: undefined,
+          isLoading: false,
         });
       })
       .catch((err) =>
@@ -151,7 +151,7 @@ class AuthProvider extends React.Component {
   };
 
   render() {
-    const antIcon = <LoadingOutlined style={{ fontSize: 99 }} spin />;
+    // const antIcon = <LoadingOutlined style={{ fontSize: 99 }} spin />;
     const { user, isLoggedIn, isLoading, errorMessage } = this.state;
     const { login, signup, logout, me } = this;
 
