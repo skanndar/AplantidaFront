@@ -35,17 +35,18 @@ class PlantDetail extends Component {
     favorite: null,
   };
 
+  // addReview = (review) => {
+  //   // console.log("review :>> ", review);
+  //   const plantCopy = { ...this.state.plant };
+  //   plantCopy.reviews.unshift(review);
+  //   this.setState({ plant: plantCopy });
+  // };
+
   addReview = (review) => {
-    // console.log("review :>> ", review);
-    const plantCopy = { ...this.state.plant };
-    plantCopy.reviews.unshift(review);
-    this.setState({ plant: plantCopy });
+   this.search()
   };
 
-  // shouldComponentUpdate(nextState) {
-  //   return this.state.reviews !== nextState.reviews;
-  // }
-
+ 
   search = () => {
     //Get the id from props.match.params.id
     const name = this.props.match.params.latinName;
@@ -181,7 +182,12 @@ class PlantDetail extends Component {
             </Card>
           </>
         ),
-        tab2: <Reviews data={plant}></Reviews>,
+        tab2: (
+          <Reviews
+            key={Math.floor(Math.random() * 1000)}
+            data={plant}
+          ></Reviews>
+        ),
       };
     } else {
       contentList = {

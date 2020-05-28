@@ -36,6 +36,7 @@ class ReviewModal extends Component {
       }
     )
       .then((response) => {
+        console.log("response.data :>> ", response.data);
         this.handleOk();
         this.props.addReview(response.data);
         // console.log("response.data from review :>> ", response.data);
