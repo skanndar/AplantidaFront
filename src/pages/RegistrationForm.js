@@ -41,19 +41,19 @@ const RegistrationForm = (props) => {
 
   const onFinish = (values) => {
     const { agreement, confirm, email, fName, genre, lName, password } = values;
-    console.log("props :>> ", props);
+    // console.log("props :>> ", props);
     props.signup(agreement, confirm, email, fName, genre, lName, password);
 
-    console.log(
-      "Received values of form: ",
-      agreement,
-      confirm,
-      email,
-      fName,
-      genre,
-      lName,
-      password
-    );
+    // console.log(
+    //   "Received values of form: ",
+    //   agreement,
+    //   confirm,
+    //   email,
+    //   fName,
+    //   genre,
+    //   lName,
+    //   password
+    // );
   };
 
   const { errorMessage } = props;

@@ -9,7 +9,7 @@ const LoginForm = (props) => {
   const onFinish = (values) => {
     const { email, password } = values;
     props.login(email, password);
-    console.log("Received values of form: ", values);
+    // console.log("Received values of form: ", values);
   };
   const { errorMessage } = props;
 

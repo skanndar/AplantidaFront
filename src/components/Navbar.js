@@ -24,7 +24,6 @@ class Navbar extends Component {
         { withCredentials: true }
       )
       .then((response) => {
-        console.log(response);
         this.setState(
           { plants: response.data, errorMessage: undefined },
           () => {

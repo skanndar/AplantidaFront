@@ -22,7 +22,7 @@ class ReviewModal extends Component {
   };
 
   onFinish = (values) => {
-    console.log("this is the new review --> ", values);
+    // console.log("this is the new review --> ", values);
     const { title, text, stars } = values;
     const user = this.props.user._id;
     const plant = this.props.plant._id;
@@ -38,8 +38,7 @@ class ReviewModal extends Component {
       .then((response) => {
         this.handleOk();
         this.props.addReview(response.data);
-        // this.props.search();
-        console.log("response.data from review :>> ", response.data);
+        // console.log("response.data from review :>> ", response.data);
       })
 
       .catch((err) => console.log("error :>> ", err));

@@ -33,7 +33,7 @@ class Profile extends Component {
   };
 
   onTabChange = (key, type) => {
-    console.log(key, type);
+    // console.log(key, type);
     this.setState({ [type]: key });
   };
 
@@ -50,7 +50,7 @@ class Profile extends Component {
         }
       )
         .then((response) => {
-          console.log("response.data put :>> ", response.data);
+          // console.log("response.data put :>> ", response.data);
           const user = response.data;
         })
         .catch((err) => console.log("error :>> ", err));
@@ -58,13 +58,11 @@ class Profile extends Component {
   };
 
   userProfile = () => {
-    console.log("iam here :>> ");
-
     Axios.get(process.env.REACT_APP_API_URL + "/auth/profile", {
       withCredentials: true,
     })
       .then((response) => {
-        console.log("response.data :>> ", response.data);
+        // console.log("response.data :>> ", response.data);
         const user = response.data;
         this.setState({ user });
       })
@@ -77,7 +75,7 @@ class Profile extends Component {
       return plants._id !== plantId;
     });
     userCopy.favorites = newFavorites;
-    console.log("userCopy :>> ", userCopy);
+    // console.log("userCopy :>> ", userCopy);
     this.setState({ user: userCopy }, () => {
       Axios.put(
         process.env.REACT_APP_API_URL + `/api/user-favorites`,
@@ -87,7 +85,7 @@ class Profile extends Component {
         }
       )
         .then((response) => {
-          console.log("user after deleted favorite :>> ", response.data);
+          // console.log("user after deleted favorite :>> ", response.data);
         })
         .catch((err) => console.log("error :>> ", err));
     });
@@ -98,7 +96,7 @@ class Profile extends Component {
       withCredentials: true,
     })
       .then((response) => {
-        console.log("response.data :>> ", response.data);
+        // console.log("response.data :>> ", response.data);
         const user = response.data;
         this.setState({ user });
       })
@@ -107,7 +105,7 @@ class Profile extends Component {
 
   render() {
     const { user } = this.state;
-    console.log("user from profile reviews :>> ", user);
+    // console.log("user from profile reviews :>> ", user);
     let contentList;
     if (user) {
       contentList = {
@@ -184,7 +182,7 @@ class Profile extends Component {
           </>
         ),
         tab2: (
-          //Uros trick to rerender
+          //Uros trick to rerender frocing key change
           <Reviews key={Math.floor(Math.random() * 1000)} data={user}></Reviews>
         ),
       };

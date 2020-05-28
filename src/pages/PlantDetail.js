@@ -36,7 +36,7 @@ class PlantDetail extends Component {
   };
 
   addReview = (review) => {
-    console.log("review :>> ", review);
+    // console.log("review :>> ", review);
     const plantCopy = { ...this.state.plant };
     plantCopy.reviews.unshift(review);
     this.setState({ plant: plantCopy });
@@ -49,37 +49,33 @@ class PlantDetail extends Component {
   search = () => {
     //Get the id from props.match.params.id
     const name = this.props.match.params.latinName;
-    console.log("plantLatinName :>> ", name);
+    // console.log("plantLatinName :>> ", name);
     axios
       .get(process.env.REACT_APP_API_URL + `/api/plant/${name}`, {
         withCredentials: true,
       })
       .then((response) => {
         console.log("response", response);
+
         const { user } = this.props;
+        console.log("user from favorites :>> ", user);
+
         const plant = response.data;
         console.log("plant._id :>> ", plant._id);
-        const checkIfFavorite =
-          user.favorites.filter((favorite) => {
-            console.log("favorite._id :>> ", favorite._id);
-            return favorite._id == plant._id;
-          }).length == 0;
-        console.log("checkIfFavorite :>> ", checkIfFavorite);
-        if (checkIfFavorite) {
-          this.setState({
-            plant: response.data,
-            reviews: response.data.reviews,
-            isLoading: false,
-            favorite: true,
-          });
-        } else {
-          this.setState({
-            plant: response.data,
-            reviews: response.data.reviews,
-            isLoading: false,
-            favorite: false,
-          });
-        }
+
+        const isFavorite = user.favorites.find((favorite) => {
+          console.log("favorite._id :>> ", favorite._id);
+          return favorite._id === plant._id;
+        });
+
+        console.log("isFavorite :>> ", isFavorite);
+
+        this.setState({
+          plant: response.data,
+          reviews: response.data.reviews,
+          isLoading: false,
+          favorite: isFavorite,
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -89,13 +85,30 @@ class PlantDetail extends Component {
   }
 
   onTabChange = (key, type) => {
-    console.log(key, type);
+    // console.log(key, type);
     this.setState({ [type]: key });
   };
 
   handleClick = () => {
-    this.setState({ favorite: !this.state.favorite });
-    Axios.put();
+    const { plant, favorite } = this.state;
+    const action = favorite ? "remove" : "add";
+    const plantId = plant._id;
+
+    Axios.put(
+      process.env.REACT_APP_API_URL + `/api/favorites/`,
+      { plantId, action },
+      {
+        withCredentials: true,
+      }
+    )
+      .then((response) => {
+        this.setState({ favorite: !this.state.favorite }, () =>
+          this.props.me()
+        );
+
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
   };
 
   render() {

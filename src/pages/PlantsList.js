@@ -11,7 +11,7 @@ class PlantsList extends Component {
     isLoading: true,
   };
   componentDidMount() {
-    console.log("this.props.location.state :>> ", this.props.location.state);
+    // console.log("this.props.location.state :>> ", this.props.location.state);
     if (this.props.location.state) {
       const { plants } = this.props.location.state;
       setTimeout(() => {

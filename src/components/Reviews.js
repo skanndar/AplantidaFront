@@ -25,12 +25,12 @@ function Reviews(props) {
       withCredentials: true,
     })
       .then((response) => {
-        console.log("response.data :>> ", response.data);
+        // console.log("response.data :>> ", response.data);
         const reviewId = response.data._id;
         const newReviewsArray = reviews.filter((review) => {
           return review._id !== reviewId;
         });
-        console.log("newReviewsArray :>> ", newReviewsArray);
+        // console.log("newReviewsArray :>> ", newReviewsArray);
         setReviews(newReviewsArray);
       })
       .catch((err) => console.log("error :>> ", err));
