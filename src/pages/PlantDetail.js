@@ -57,6 +57,7 @@ class PlantDetail extends Component {
       })
       .then((response) => {
         console.log("response", response);
+        // this.props.me()
 
         const { user } = this.props;
         console.log("user from favorites :>> ", user);

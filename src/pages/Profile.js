@@ -86,6 +86,7 @@ class Profile extends Component {
       )
         .then((response) => {
           // console.log("user after deleted favorite :>> ", response.data);
+          this.props.me();
         })
         .catch((err) => console.log("error :>> ", err));
     });
