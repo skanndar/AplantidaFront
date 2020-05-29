@@ -38,8 +38,19 @@ class Navbar extends Component {
         this.setState({
           errorMessage: "Please login or register to be able to search",
         });
-        console.log(err);
+        setTimeout(() => {
+          this.setState({ errorMessage: undefined });
+        }, 2500);
+        console.log("this is error -->", err);
       });
+  };
+  displayError = () => {
+    return (
+      this.state.errorMessage,
+      setTimeout(() => {
+        this.setState({ errorMessage: undefined });
+      }, 1000)
+    );
   };
 
   render() {
@@ -59,30 +70,46 @@ class Navbar extends Component {
 
         {!isLoading ? (
           isLoggedIn ? (
-            <Menu
-              className="menu"
-              theme="dark"
-              mode="horizontal"
-              defaultSelectedKeys={["2"]}
-            >
-              {/* <Menu.Item key="1">
+            <>
+              <Menu
+                className="menu"
+                theme="dark"
+                mode="horizontal"
+                defaultSelectedKeys={["2"]}
+              >
+                {/* <Menu.Item key="1">
                 <Link to={"/plants"}>
                   <SyncOutlined spin />
                 </Link>
               </Menu.Item> */}
-              <Menu.Item key="2">
-                <Link to={"/profile"}>
-                  {user.image ? (
-                    <Avatar src={user.image} />
-                  ) : (
-                    <Avatar>{user.fName}</Avatar>
-                  )}
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="3" onClick={logout}>
-                <LogoutOutlined />
-              </Menu.Item>
-            </Menu>
+                <Menu.Item key="2">
+                  <Link to={"/profile"}>
+                    {user.image ? (
+                      <Avatar src={user.image} />
+                    ) : (
+                      <Avatar>{user.fName}</Avatar>
+                    )}
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="3" onClick={logout}>
+                  <LogoutOutlined />
+                </Menu.Item>
+              </Menu>
+              <Search
+                ref={(input) => input && input.focus()}
+                className="searchBar"
+                placeholder={
+                  isLoggedIn ? "Search plants" : "Login to search plants"
+                }
+                enterButton="search"
+                // loading
+                size="large"
+                allowClear
+                onSearch={(value) => {
+                  search(value);
+                }}
+              ></Search>
+            </>
           ) : (
             <Menu
               className="menu"
@@ -97,22 +124,6 @@ class Navbar extends Component {
               </Menu.Item>
             </Menu>
           )
-        ) : null}
-
-        <Search
-          ref={(input) => input && input.focus()}
-          className="searchBar"
-          placeholder={isLoggedIn ? "Search plants" : "Login to search plants"}
-          enterButton="search"
-          // loading
-          size="large"
-          allowClear
-          onSearch={(value) => {
-            search(value);
-          }}
-        ></Search>
-        {errorMessage ? (
-          <Alert message={errorMessage} type="error" showIcon closable />
         ) : null}
       </Header>
     );
