@@ -44,14 +44,15 @@ class Navbar extends Component {
         console.log("this is error -->", err);
       });
   };
-  displayError = () => {
-    return (
-      this.state.errorMessage,
-      setTimeout(() => {
-        this.setState({ errorMessage: undefined });
-      }, 1000)
-    );
-  };
+  
+  // displayError = () => {
+  //   return (
+  //     this.state.errorMessage,
+  //     setTimeout(() => {
+  //       this.setState({ errorMessage: undefined });
+  //     }, 1000)
+  //   );
+  // };
 
   render() {
     // `user`, `logout`, `isLoggedIn` are coming from the AuthProvider
