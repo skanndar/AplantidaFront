@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import axiosRequestFunctions from "./../lib/auth-service";
 
 function Reviews(props) {
   const [reviews, setReviews] = useState(props.data.reviews);
@@ -21,12 +22,11 @@ function Reviews(props) {
   );
 
   const handleDelete = (reviewId) => {
-    Axios.delete(process.env.REACT_APP_API_URL + `/api/review/${reviewId}`, {
-      withCredentials: true,
-    })
+    axiosRequestFunctions
+      .deleteReview(reviewId)
       .then((response) => {
-        // console.log("response.data :>> ", response.data);
-        const reviewId = response.data._id;
+        // console.log("response.data :>> ", response);
+        const reviewId = response._id;
         const newReviewsArray = reviews.filter((review) => {
           return review._id !== reviewId;
         });

@@ -5,6 +5,7 @@ import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Input, Layout, Menu, Alert, Avatar } from "antd";
 import axios from "axios";
 import AplantidaIcon from "./AplantidaIcon";
+import axiosRequestFunctions from "./../lib/auth-service";
 
 const { Header } = Layout;
 
@@ -16,17 +17,44 @@ class Navbar extends Component {
     errorMessage: undefined,
   };
 
+  // search = (searchStr) => {
+  //   axiosRequestFunctions.search(searchStr)
+  //     .then((response) => {
+  //       this.setState(
+  //         { plants: response.data, errorMessage: undefined },
+  //         () => {
+  //           this.props.history.push({
+  //             pathname: "/search",
+  //             state: { plants: this.state.plants },
+  //           });
+  //         }
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       this.setState({
+  //         errorMessage: "Please login or register to be able to search",
+  //       });
+  //       setTimeout(() => {
+  //         this.setState({ errorMessage: undefined });
+  //       }, 2500);
+  //     });
+  // };
+
   search = (searchStr) => {
-    axios
-      .post(
-        process.env.REACT_APP_API_URL + "/api/plants",
-        { searchStr },
-        { withCredentials: true }
-      )
-      .then((response) => {
+    // axios
+    //   .post(
+    //     process.env.REACT_APP_API_URL + "/api/plants",
+    //     { searchStr },
+    //     { withCredentials: true }
+    //   )
+    axiosRequestFunctions
+      .search(searchStr)
+      .then((plantsArray) => {
+        console.log("plantsArray :>> ", plantsArray);
         this.setState(
-          { plants: response.data, errorMessage: undefined },
+          { plants: plantsArray, errorMessage: undefined },
           () => {
+            console.log("this.state.plants :>> ", this.state.plants);
             this.props.history.push({
               pathname: "/search",
               state: { plants: this.state.plants },
@@ -41,22 +69,13 @@ class Navbar extends Component {
         setTimeout(() => {
           this.setState({ errorMessage: undefined });
         }, 2500);
-        console.log("this is error -->", err);
       });
   };
-  
-  // displayError = () => {
-  //   return (
-  //     this.state.errorMessage,
-  //     setTimeout(() => {
-  //       this.setState({ errorMessage: undefined });
-  //     }, 1000)
-  //   );
-  // };
 
   render() {
     // `user`, `logout`, `isLoggedIn` are coming from the AuthProvider
     // and are injected by the withAuth HOC
+
     const { logout, isLoggedIn, isLoading, user } = this.props;
     const { search } = this;
     const { errorMessage } = this.state;
@@ -97,7 +116,7 @@ class Navbar extends Component {
                 </Menu.Item>
               </Menu>
               <Search
-                ref={(input) => input && input.focus()}
+                // ref={(input) => input && input.focus()}
                 className="searchBar"
                 placeholder={
                   isLoggedIn ? "Search plants" : "Login to search plants"

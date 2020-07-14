@@ -7,9 +7,10 @@ import { Link } from "react-router-dom";
 
 const LoginForm = (props) => {
   const onFinish = (values) => {
+    console.log("Received values of form: ", values);
     const { email, password } = values;
     props.login(email, password);
-    // console.log("Received values of form: ", values);
+    // // console.log("props.login :>> ", props.login);
   };
   const { errorMessage } = props;
 

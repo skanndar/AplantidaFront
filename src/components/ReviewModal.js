@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Form, Input, Modal, Button, Rate, Alert } from "antd";
 import { HeartOutlined } from "@ant-design/icons";
 import ImageDragger from "./ImageDragger";
-import Axios from "axios";
 import { withAuth } from "../lib/Auth";
+import axiosRequestFunctions from "./../lib/auth-service";
+
 
 const layout = {
   wrapperCol: {
@@ -28,13 +29,8 @@ class ReviewModal extends Component {
     const plant = this.props.plant._id;
 
     // Add review
-    Axios.post(
-      process.env.REACT_APP_API_URL + `/api/review`,
-      { title, text, stars, user, plant },
-      {
-        withCredentials: true,
-      }
-    )
+
+    axiosRequestFunctions.addReview(title, text, stars, user, plant )
       .then((response) => {
         console.log("response.data :>> ", response.data);
         this.handleOk();

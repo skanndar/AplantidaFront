@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { withAuth } from "../lib/Auth";
 import { Row, Col, Card, Avatar, Button } from "antd";
-import Axios from "axios";
 import Reviews from "../components/Reviews";
 import UploaderAvatar from "./../components/UploadAvatar";
 import EditableText from "../components/EditableText";
 import { Link } from "react-router-dom";
 import { DeleteTwoTone } from "@ant-design/icons";
+import axiosRequestFunctions from "./../lib/auth-service";
 
 const tabList = [
   {
@@ -19,13 +19,6 @@ const tabList = [
   },
 ];
 
-// const IconText = ({ icon, text }) => (
-//   <div style={{ textAlign: "right", paddingBottom: "5px" }}>
-//     {React.createElement(icon)}
-//     {text}
-//   </div>
-// );
-
 class Profile extends Component {
   state = {
     key: "tab1",
@@ -37,20 +30,16 @@ class Profile extends Component {
     this.setState({ [type]: key });
   };
 
+  //
   updateUserData = (key, value) => {
     const userCopy = { ...this.state.user };
     userCopy[key] = value;
     this.setState({ user: userCopy }, () => {
       const { fName, lName, image, email, genre } = this.state.user;
-      Axios.put(
-        process.env.REACT_APP_API_URL + "/api/user",
-        { fName, lName, image, email, genre },
-        {
-          withCredentials: true,
-        }
-      )
+      axiosRequestFunctions
+        .userData(fName, lName, image, email, genre)
         .then((response) => {
-          // console.log("response.data put :>> ", response.data);
+          // console.log("response.data put :>> ", response);
           const user = response.data;
         })
         .catch((err) => console.log("error :>> ", err));
@@ -58,9 +47,8 @@ class Profile extends Component {
   };
 
   userProfile = () => {
-    Axios.get(process.env.REACT_APP_API_URL + "/auth/profile", {
-      withCredentials: true,
-    })
+    axiosRequestFunctions
+      .profile()
       .then((response) => {
         // console.log("response.data :>> ", response.data);
         const user = response.data;
@@ -77,13 +65,8 @@ class Profile extends Component {
     userCopy.favorites = newFavorites;
     // console.log("userCopy :>> ", userCopy);
     this.setState({ user: userCopy }, () => {
-      Axios.put(
-        process.env.REACT_APP_API_URL + `/api/user-favorites`,
-        { plantId },
-        {
-          withCredentials: true,
-        }
-      )
+      axiosRequestFunctions
+        .favorites(plantId)
         .then((response) => {
           // console.log("user after deleted favorite :>> ", response.data);
           this.props.me();
@@ -93,9 +76,8 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    Axios.get(process.env.REACT_APP_API_URL + "/auth/profile", {
-      withCredentials: true,
-    })
+    axiosRequestFunctions
+      .profile()
       .then((response) => {
         // console.log("response.data :>> ", response.data);
         const user = response.data;

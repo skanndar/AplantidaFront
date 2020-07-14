@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { Spin, Row, Col } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Row, Col } from "antd";
 import AplantidaIcon from "./../components/AplantidaIcon";
+import axiosRequestFunctions from "./auth-service";
 
 const { Consumer, Provider } = React.createContext();
 
@@ -40,12 +40,15 @@ class AuthProvider extends React.Component {
   componentDidMount() {
     // When app and AuthProvider load for the first time
     // make a call to the server '/me' and check if user is authenitcated
-    axios
-      .get(process.env.REACT_APP_API_URL + "/auth/me", {
-        withCredentials: true,
-      })
+    // axios
+    //   .get(process.env.REACT_APP_API_URL + "/auth/me", {
+    //     withCredentials: true,
+    //   })
+    axiosRequestFunctions
+      .me()
       .then((response) => {
-        const user = response.data;
+        console.log("response from first load :>> ", response);
+        const user = response;
         this.setState({
           isLoggedIn: true,
           user,
@@ -64,12 +67,14 @@ class AuthProvider extends React.Component {
   }
 
   me = () => {
-    axios
-      .get(process.env.REACT_APP_API_URL + "/auth/me", {
-        withCredentials: true,
-      })
+    // axios
+    //   .get(process.env.REACT_APP_API_URL + "/auth/me", {
+    //     withCredentials: true,
+    //   })
+    axiosRequestFunctions
+      .me()
       .then((response) => {
-        const user = response.data;
+        const user = response;
         this.setState({
           isLoggedIn: true,
           isLoading: false,
@@ -88,14 +93,11 @@ class AuthProvider extends React.Component {
   };
 
   login = (email, password) => {
-    axios
-      .post(
-        process.env.REACT_APP_API_URL + "/auth/login",
-        { email, password },
-        { withCredentials: true }
-      )
+    axiosRequestFunctions
+      .login(email, password)
       .then((response) => {
-        const user = response.data;
+        console.log("response :>> ", response);
+        const user = response;
         this.setState({
           isLoggedIn: true,
           isLoading: false,
@@ -114,14 +116,23 @@ class AuthProvider extends React.Component {
   };
 
   signup = (agreement, confirm, email, fName, genre, lName, password) => {
-    axios
-      .post(
-        process.env.REACT_APP_API_URL + "/auth/signup",
-        { agreement, confirm, email, fName, genre, lName, password },
-        { withCredentials: true }
-      )
+    // axios
+    //   .post(
+    //     process.env.REACT_APP_API_URL + "/auth/signup",
+    //     { agreement, confirm, email, fName, genre, lName, password },
+    //     { withCredentials: true }
+    //   )
+    axiosRequestFunctions(
+      agreement,
+      confirm,
+      email,
+      fName,
+      genre,
+      lName,
+      password
+    )
       .then((response) => {
-        const user = response.data;
+        const user = response;
         this.setState({
           isLoggedIn: true,
           isLoading: false,
@@ -140,10 +151,9 @@ class AuthProvider extends React.Component {
   };
 
   logout = () => {
-    axios
-      .get(process.env.REACT_APP_API_URL + "/auth/logout", {
-        withCredentials: true,
-      })
+    
+    axiosRequestFunctions
+      .logout()
       .then((response) => {
         this.setState({ isLoggedIn: false, isLoading: false, user: null });
       })
