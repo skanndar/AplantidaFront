@@ -57,7 +57,7 @@ class Auth {
   }
 
   login(email, password) {
-    console.log("auth email, password :>> ", email, password);
+    // console.log("auth email, password :>> ", email, password);
     return this.auth
       .post("/auth/login", { email, password })
       .then(({ data }) => {

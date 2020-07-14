@@ -40,10 +40,7 @@ class AuthProvider extends React.Component {
   componentDidMount() {
     // When app and AuthProvider load for the first time
     // make a call to the server '/me' and check if user is authenitcated
-    // axios
-    //   .get(process.env.REACT_APP_API_URL + "/auth/me", {
-    //     withCredentials: true,
-    //   })
+
     axiosRequestFunctions
       .me()
       .then((response) => {
@@ -67,10 +64,6 @@ class AuthProvider extends React.Component {
   }
 
   me = () => {
-    // axios
-    //   .get(process.env.REACT_APP_API_URL + "/auth/me", {
-    //     withCredentials: true,
-    //   })
     axiosRequestFunctions
       .me()
       .then((response) => {
@@ -116,21 +109,8 @@ class AuthProvider extends React.Component {
   };
 
   signup = (agreement, confirm, email, fName, genre, lName, password) => {
-    // axios
-    //   .post(
-    //     process.env.REACT_APP_API_URL + "/auth/signup",
-    //     { agreement, confirm, email, fName, genre, lName, password },
-    //     { withCredentials: true }
-    //   )
-    axiosRequestFunctions(
-      agreement,
-      confirm,
-      email,
-      fName,
-      genre,
-      lName,
-      password
-    )
+    axiosRequestFunctions
+      .signup(agreement, confirm, email, fName, genre, lName, password)
       .then((response) => {
         const user = response;
         this.setState({
@@ -151,7 +131,6 @@ class AuthProvider extends React.Component {
   };
 
   logout = () => {
-    
     axiosRequestFunctions
       .logout()
       .then((response) => {

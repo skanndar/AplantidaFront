@@ -7,7 +7,6 @@ import {
   HeartOutlined,
   DeleteTwoTone,
 } from "@ant-design/icons";
-import Axios from "axios";
 import { Link } from "react-router-dom";
 import axiosRequestFunctions from "./../lib/auth-service";
 
