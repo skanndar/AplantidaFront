@@ -72,7 +72,7 @@ class Auth {
   }
 
   logout() {
-    return this.auth.post("/auth/logout", {}).then(({ data }) => data);
+    return this.auth.get("/auth/logout", {}).then(({ data }) => data);
     // return this.auth.post("/auth/logout", {}).then((response) => response.data);
   }
 
