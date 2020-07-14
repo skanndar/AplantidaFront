@@ -93,7 +93,7 @@ function Reviews(props) {
               </>
             }
             description={
-              <Link to={`/plant/${item.plant.latinName}`}>
+              <Link to={`/plant/${item.plant.latinName}/${item.plant._id}`}>
                 {item.plant.latinName}
               </Link>
             }

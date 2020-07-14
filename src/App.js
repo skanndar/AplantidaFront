@@ -60,7 +60,7 @@ class App extends Component {
                 <Switch>
                   <PrivateRoute
                     exact
-                    path="/plant/:latinName"
+                    path="/plant/:latinName/:_id"
                     component={PlantDetail}
                   />
                   <Route exact path="/" component={Home} />

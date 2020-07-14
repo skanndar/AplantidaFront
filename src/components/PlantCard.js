@@ -14,7 +14,7 @@ const IconText = ({ icon, text }) => (
 export default function PlantCard(props) {
   return (
     <div>
-      <Link to={`/plant/${props.latinName}`}>
+      <Link to={`/plant/${props.latinName}/${props._id}`}>
         <Card
           hoverable
           size="small"

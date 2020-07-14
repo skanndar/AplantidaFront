@@ -138,7 +138,9 @@ class Profile extends Component {
                       <>
                         <Row justify="space-between" gutter={32}>
                           <Col span={18}>
-                            <Link to={`/plant/${favorite.latinName}`}>
+                            <Link
+                              to={`/plant/${favorite.latinName}/${favorite._id}`}
+                            >
                               <Avatar
                                 style={{ margin: 2 }}
                                 src={favorite.img[0]}

@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { Row, Col } from "antd";
 import AplantidaIcon from "./../components/AplantidaIcon";
 import axiosRequestFunctions from "./auth-service";

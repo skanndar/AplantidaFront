@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col, Carousel, Card, Button } from "antd";
 import { HeartTwoTone, HeartOutlined } from "@ant-design/icons";
-import axios from "axios";
 import Reviews from "../components/Reviews";
 import ReviewModal from "../components/ReviewModal";
 import AplantidaIcon from "../components/AplantidaIcon";
@@ -43,18 +42,21 @@ class PlantDetail extends Component {
   // };
 
   addReview = (review) => {
-   this.search()
+    this.search();
   };
 
- 
   search = () => {
     //Get the id from props.match.params.id
     const name = this.props.match.params.latinName;
+    const id = this.props.match.params._id;
+    console.log("id :>> ", id);
+
     // console.log("plantLatinName :>> ", name);
-    axios
-      .get(process.env.REACT_APP_API_URL + `/api/plant/${name}`, {
-        withCredentials: true,
-      })
+    Axios.get(process.env.REACT_APP_API_URL + `/api/plant/${id}`, {
+      // Axios.get(process.env.REACT_APP_API_URL + `/api/plant/${name}`, {
+
+      withCredentials: true,
+    })
       .then((response) => {
         console.log("response", response);
         // this.props.me()
